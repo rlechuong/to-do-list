@@ -13,25 +13,38 @@
       </div>
     </div>
     <div id="main-display">
-      <dialog id="create-todo-dialog" open>
+      <button id="new-todo-button" type="button">New To-Do</button>
+
+      <!-- Form to create new task.  -->
+      <dialog id="new-todo-dialog">
+        <button id="new-todo-dialog-close-button" type="button">X</button>
         <form>
           <h1>Create To Do</h1>
           <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required />
+            <label for="new-todo-title">Title</label>
+            <input
+              type="text"
+              id="new-todo-title"
+              name="new-todo-title"
+              required
+            />
           </div>
           <div>
-            <label for="description">Description</label>
+            <label for="new-todo-description">Description</label>
             <textarea
-              id="description"
-              name="description"
+              id="new-todo-description"
+              name="new-todo-description"
               rows="4"
               cols="50"
             ></textarea>
           </div>
           <div>
-            <label for="due-date">Due Date</label>
-            <input type="date" id="due-date" name="due-date" />
+            <label for="new-todo-due-date">Due Date</label>
+            <input
+              type="date"
+              id="new-todo-due-date"
+              name="new-todo-due-date"
+            />
           </div>
           <div>
             <fieldset>
@@ -39,46 +52,66 @@
               <div>
                 <input
                   type="radio"
-                  id="very-high"
-                  name="priority"
+                  id="new-todo-very-high"
+                  name="new-todo-priority"
                   value="very-high"
                 />
-                <label for="very-high">Very High</label>
+                <label for="new-todo-very-high">Very High</label>
               </div>
-              <div>
-                <input type="radio" id="high" name="priority" value="high" />
-                <label for="high">High</label>
-              </div>
-              <div>
+              <div id="new-todo-priority-container">
                 <input
                   type="radio"
-                  id="medium"
-                  name="priority"
-                  value="medium"
+                  id="new-todo-high"
+                  name="new-todo-priority"
+                  value="high"
                 />
-                <label for="medium">Medium</label>
-              </div>
-              <div>
-                <input type="radio" id="low" name="priority" value="low" />
-                <label for="low">Low</label>
+                <label for="new-todo-high">High</label>
               </div>
               <div>
                 <input
                   type="radio"
-                  id="very-low"
-                  name="priority"
+                  id="new-todo-medium"
+                  name="new-todo-priority"
+                  value="medium"
+                  checked
+                />
+                <label for="new-todo-medium">Medium</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="new-todo-low"
+                  name="new-todo-priority"
+                  value="low"
+                />
+                <label for="new-todo-low">Low</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="new-todo-very-low"
+                  name="new-todo-priority"
                   value="very-low"
                 />
-                <label for="very-low">Very Low</label>
+                <label for="new-todo-very-low">Very Low</label>
               </div>
             </fieldset>
           </div>
           <div id="create-todo-project-dropdown">
-            <label for="project-dropdown">Project</label>
-            <select name="project" id="project-dropdown"></select>
+            <label for="new-todo-project-dropdown">Project</label>
+            <select
+              name="new-todo-project"
+              id="new-todo-project-dropdown"
+            ></select>
+          </div>
+          <div>
+            <button id="new-todo-dialog-submit-button" type="button">
+              Submit
+            </button>
           </div>
         </form>
       </dialog>
     </div>
+    <div id="main-details"></div>
   </body>
 </html>

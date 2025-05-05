@@ -1,5 +1,13 @@
 class ToDo {
-  constructor(title, description, dueDate, priority, project) {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority,
+    notes,
+    checklist,
+    projectID
+  ) {
     this.id = crypto.randomUUID();
     this.title = title;
     this.description = description;
@@ -7,7 +15,7 @@ class ToDo {
     this.priority = priority;
     this.notes = notes;
     this.checklist = checklist;
-    this.project = project;
+    this.projectID = projectID;
   }
 }
 
