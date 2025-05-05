@@ -26,4 +26,17 @@ const getMatchingProjectsToDos = function (id) {
   return matchingToDos;
 };
 
-export { getMatchingProjectsToDosDefault, getMatchingProjectsToDos };
+const getToDoByID = function (id) {
+  const todos = getToDos();
+
+  const matchingToDo = todos.find(function (todo) {
+    return todo["id"] === id;
+  });
+  return matchingToDo;
+};
+
+export {
+  getMatchingProjectsToDosDefault,
+  getMatchingProjectsToDos,
+  getToDoByID,
+};

@@ -9,6 +9,7 @@ import {
   populateProjects,
   populateProjectDropDown,
   populateToDoListContainerDefault,
+  populateToDoItemDetailsContainer,
 } from "./displayController.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
@@ -18,6 +19,7 @@ const addAllEvents = function () {
   addNewToDoDialogCloseButtonEvents();
   addNewToDoDialogSubmitButtonEvents();
   addProjectButtonEvents();
+  addToDoButtonEvents();
 };
 
 const addNewToDoButtonEvents = function () {
@@ -43,8 +45,22 @@ const addProjectButtonEvents = function () {
 
   projectButtonList.forEach(function (button) {
     button.addEventListener("click", () => {
-      const id = button.getAttribute("data-id");
+      const id = button.getAttribute("data-project-id");
       populateToDoListContainerDefault(id);
+
+      addToDoButtonEvents();
+    });
+  });
+};
+
+const addToDoButtonEvents = function () {
+  const toDoButtonList = document.querySelectorAll(".todo-button");
+
+  toDoButtonList.forEach(function (button) {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-todo-id");
+      console.log(id);
+      populateToDoItemDetailsContainer(id);
     });
   });
 };
@@ -79,8 +95,18 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       newToDoProjectID
     );
 
+    console.log(newToDoProjectID);
+    populateToDoListContainerDefault(newToDoProjectID);
+    addToDoButtonEvents();
     newToDoDialog.close();
   });
 };
 
-export { addAllEvents };
+export {
+  addAllEvents,
+  addNewToDoButtonEvents,
+  addNewToDoDialogCloseButtonEvents,
+  addNewToDoDialogSubmitButtonEvents,
+  addProjectButtonEvents,
+  addToDoButtonEvents,
+};
