@@ -5,6 +5,11 @@ import {
   createDefaultProject,
   createToDo,
 } from "./storage.js";
+import {
+  populateProjects,
+  populateProjectDropDown,
+  populateToDoListContainerDefault,
+} from "./displayController.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 
@@ -12,6 +17,7 @@ const addAllEvents = function () {
   addNewToDoButtonEvents();
   addNewToDoDialogCloseButtonEvents();
   addNewToDoDialogSubmitButtonEvents();
+  addProjectButtonEvents();
 };
 
 const addNewToDoButtonEvents = function () {
@@ -29,6 +35,17 @@ const addNewToDoDialogCloseButtonEvents = function () {
 
   newToDoDialogCloseButton.addEventListener("click", () => {
     newToDoDialog.close();
+  });
+};
+
+const addProjectButtonEvents = function () {
+  const projectButtonList = document.querySelectorAll(".project-button");
+
+  projectButtonList.forEach(function (button) {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      populateToDoListContainerDefault(id);
+    });
   });
 };
 
@@ -62,7 +79,7 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       newToDoProjectID
     );
 
-    console.log(getToDos());
+    newToDoDialog.close();
   });
 };
 

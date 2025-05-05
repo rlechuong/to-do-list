@@ -6,9 +6,11 @@ import {
   createDefaultProject,
   createToDo,
 } from "./storage.js";
+import { addAllEvents } from "./eventHandler.js";
 import {
   populateProjects,
   populateProjectDropDown,
+  populateToDoListContainerDefault,
 } from "./displayController.js";
 
 createDefaultProject();
@@ -18,6 +20,7 @@ const userProjects = getProjects();
 
 populateProjects(userProjects);
 populateProjectDropDown(userProjects);
+populateToDoListContainerDefault();
 
 addAllEvents();
 
