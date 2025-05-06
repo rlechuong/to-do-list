@@ -10,13 +10,12 @@
 
     <div id="main-nav">
       <div id="main-nav-projects-container-title">Projects</div>
-      <div id="main-nav-projects-container">
-      </div>
+      <div id="main-nav-projects-container"></div>
       <button id="new-project-button" type="button">New Project</button>
       <!-- Form to create new project. -->
       <dialog id="new-project-dialog">
         <button id="new-project-dialog-close-button" type="button">X</button>
-        <form>
+        <form id="new-project-form">
           <h1>New Project</h1>
           <div>
             <label for="new-project-title">Title</label>
@@ -37,13 +36,13 @@
     </div>
 
     <div id="main-display">
-      <div id="toDoListContainerProjectTitleContainer"></div>
       <button id="new-todo-button" type="button">New To-Do</button>
+      <div id="todo-list-container-header"></div>
       <!-- Form to create new task.  -->
       <dialog id="new-todo-dialog">
         <button id="new-todo-dialog-close-button" type="button">X</button>
-        <form>
-          <h1>Create To Do</h1>
+        <form id="new-todo-form">
+          <div id="todo-dialog-header">Create To Do</div>
           <div>
             <label for="new-todo-title">Title</label>
             <input

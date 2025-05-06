@@ -14,7 +14,7 @@ const toDoItemDetailsContainer = document.querySelector(
   "#todo-item-details-container"
 );
 
-const selectedProjectID = "";
+const activeProjectID = "";
 
 const populateProjects = function (projectsArray) {
   mainNavProjectsContainer.textContent = "";
@@ -40,26 +40,34 @@ const populateProjectDropDown = function (projectsArray) {
   }
 };
 
-const populateToDoListContainer = function (id) {
-  toDoListContainer.textContent = "";
-
-  let toDoList = getMatchingProjectsToDos(id);
-
-  const toDoListContainerProjectTitleContainer = document.createElement("div");
-  toDoListContainerProjectTitleContainer.setAttribute(
-    "id",
-    "todo-list-container-project-title-container"
+const populateToDoListContainerHeader = function (id) {
+  const toDoListContainerHeader = document.querySelector(
+    "#todo-list-container-header"
   );
-  const toDoListContainerProjectTitle = getProjectByID(id)["name"];
-  toDoListContainerProjectTitleContainer.textContent = `${toDoListContainerProjectTitle}`;
-  toDoListContainer.appendChild(toDoListContainerProjectTitleContainer);
+
+  toDoListContainerHeader.textContent = "";
+
+  const toDoListContainerProjectTitle = document.createElement("div");
+  toDoListContainerProjectTitle.setAttribute(
+    "id",
+    "todo-list-container-project-title"
+  );
+  const projectTitle = getProjectByID(id)["name"];
+  toDoListContainerProjectTitle.textContent = `${projectTitle}`;
+  toDoListContainerHeader.appendChild(toDoListContainerProjectTitle);
 
   const deleteProjectButton = document.createElement("button");
   deleteProjectButton.setAttribute("data-project-id", id);
   deleteProjectButton.setAttribute("class", "delete-project-button");
   deleteProjectButton.setAttribute("type", "button");
   deleteProjectButton.textContent = "Delete This Project";
-  toDoListContainer.appendChild(deleteProjectButton);
+  toDoListContainerHeader.appendChild(deleteProjectButton);
+};
+
+const populateToDoListContainer = function (id) {
+  toDoListContainer.textContent = "";
+
+  let toDoList = getMatchingProjectsToDos(id);
 
   for (const toDo of toDoList) {
     const toDoListItem = document.createElement("button");
@@ -136,12 +144,14 @@ const populateToDoItemDetailsContainer = function (id) {
 const defaultView = function () {
   const defaultProjectID = getProjects()[0]["id"];
   console.log(defaultProjectID);
+  populateToDoListContainerHeader(defaultProjectID);
   populateToDoListContainer(defaultProjectID);
 };
 
 export {
   populateProjects,
   populateProjectDropDown,
+  populateToDoListContainerHeader,
   populateToDoListContainer,
   populateToDoItemDetailsContainer,
   defaultView,

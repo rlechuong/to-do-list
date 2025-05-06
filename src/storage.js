@@ -1,5 +1,6 @@
 import { Project } from "./project.js";
 import { ToDo } from "./todo.js";
+import { getMatchingProjectsToDos } from "./filters.js";
 
 const projects = [];
 const toDos = [];
@@ -52,11 +53,23 @@ const deleteProject = function (id) {
     return element["id"] === id;
   });
 
+  console.log(getToDos());
+
   if (indexToDelete === 0) {
     alert("Cannot Delete Default.");
   } else {
+    const toDosToDelete = getMatchingProjectsToDos(id);
+
+    console.log(toDosToDelete);
+
+    for (const todo of toDosToDelete) {
+      deleteToDo(todo["id"]);
+    }
+
     projects.splice(indexToDelete, 1);
   }
+
+  console.log(getToDos());
 };
 
 const deleteToDo = function (id) {
@@ -65,9 +78,6 @@ const deleteToDo = function (id) {
   });
 
   toDos.splice(indexToDelete, 1);
-
-  console.log(indexToDelete);
-  console.log(toDos);
 };
 
 export {

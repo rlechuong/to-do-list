@@ -10,11 +10,12 @@ import {
 import {
   populateProjects,
   populateProjectDropDown,
+  populateToDoListContainerHeader,
   populateToDoListContainer,
   populateToDoItemDetailsContainer,
   defaultView,
 } from "./displayController.js";
-import { getToDoByID } from "./filters.js";
+import { getToDoByID, getProjectByID } from "./filters.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 const newProjectDialog = document.querySelector("#new-project-dialog");
@@ -33,7 +34,6 @@ const addAllEvents = function () {
   addNewProjectButtonEvents();
   addNewProjectDialogSubmitButtonEvents();
   addDeleteProjectButtonEvents();
-  addDeleteToDoButtonEvents();
 };
 
 const addNewProjectButtonEvents = function () {
@@ -55,6 +55,8 @@ const addNewProjectDialogCloseButtonEvents = function () {
 };
 
 const addNewProjectDialogSubmitButtonEvents = function () {
+  const newProjectForm = document.querySelector("#new-project-form");
+
   const newProjectDialogSubmitButton = document.querySelector(
     "#new-project-dialog-submit-button"
   );
@@ -62,13 +64,24 @@ const addNewProjectDialogSubmitButtonEvents = function () {
   newProjectDialogSubmitButton.addEventListener("click", function (event) {
     event.preventDefault();
 
-    const newProjectTitle = document.querySelector("#new-project-title").value;
+    if (newProjectForm.reportValidity()) {
+      const newProjectTitle =
+        document.querySelector("#new-project-title").value;
 
-    createProject(newProjectTitle);
-    populateProjects(getProjects());
-    populateProjectDropDown(getProjects());
-    addProjectButtonEvents();
-    newProjectDialog.close();
+      createProject(newProjectTitle);
+
+      const latestProjectIndex = getProjects().length - 1;
+
+      populateProjects(getProjects());
+      populateProjectDropDown(getProjects());
+      populateToDoListContainerHeader(getProjects()[latestProjectIndex]["id"]);
+      populateToDoListContainer(getProjects()[latestProjectIndex]["id"]);
+      addDeleteProjectButtonEvents();
+      addProjectButtonEvents();
+
+      newProjectDialog.close();
+    } else {
+    }
   });
 };
 
@@ -97,6 +110,7 @@ const addProjectButtonEvents = function () {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-project-id");
       populateToDoListContainer(id);
+      populateToDoListContainerHeader(id);
       addDeleteProjectButtonEvents();
       addToDoButtonEvents();
     });
@@ -117,6 +131,8 @@ const addToDoButtonEvents = function () {
 };
 
 const addNewToDoDialogSubmitButtonEvents = function () {
+  const newToDoForm = document.querySelector("#new-todo-form");
+
   const newToDoDialogSubmitButton = document.querySelector(
     "#new-todo-dialog-submit-button"
   );
@@ -124,31 +140,36 @@ const addNewToDoDialogSubmitButtonEvents = function () {
   newToDoDialogSubmitButton.addEventListener("click", (event) => {
     event.preventDefault();
 
-    const newToDoTitle = document.querySelector("#new-todo-title").value;
-    const newToDoDescription = document.querySelector(
-      "#new-todo-description"
-    ).value;
-    const newToDoDueDate = document.querySelector("#new-todo-due-date").value;
-    const newToDoPriority = document.querySelector(
-      `input[name="new-todo-priority"]:checked`
-    ).value;
-    const newToDoProjectID = document.querySelector(
-      "#new-todo-project-dropdown"
-    ).value;
+    if (newToDoForm.reportValidity()) {
+      const newToDoTitle = document.querySelector("#new-todo-title").value;
+      const newToDoDescription = document.querySelector(
+        "#new-todo-description"
+      ).value;
+      const newToDoDueDate = document.querySelector("#new-todo-due-date").value;
+      const newToDoPriority = document.querySelector(
+        `input[name="new-todo-priority"]:checked`
+      ).value;
+      const newToDoProjectID = document.querySelector(
+        "#new-todo-project-dropdown"
+      ).value;
 
-    createToDo(
-      newToDoTitle,
-      newToDoDescription,
-      newToDoDueDate,
-      newToDoPriority,
-      "",
-      "",
-      newToDoProjectID
-    );
+      createToDo(
+        newToDoTitle,
+        newToDoDescription,
+        newToDoDueDate,
+        newToDoPriority,
+        "",
+        "",
+        newToDoProjectID
+      );
 
-    populateToDoListContainer(newToDoProjectID);
-    addToDoButtonEvents();
-    newToDoDialog.close();
+      populateToDoListContainer(newToDoProjectID);
+      populateToDoListContainerHeader(newToDoProjectID);
+      addToDoButtonEvents();
+      addDeleteProjectButtonEvents();
+      newToDoDialog.close();
+    } else {
+    }
   });
 };
 
@@ -165,8 +186,10 @@ const addDeleteProjectButtonEvents = function () {
     if (confirm("Are you sure you want to delete this Project?")) {
       deleteProject(projectToDeleteID);
       populateProjects(getProjects());
+      populateProjectDropDown(getProjects());
       addProjectButtonEvents();
       defaultView();
+      addDeleteProjectButtonEvents();
     }
   });
 };
@@ -180,7 +203,9 @@ const addDeleteToDoButtonEvents = function (id) {
       deleteToDo(id);
       toDoItemDetailsContainer.textContent = "";
       populateToDoListContainer(toDoToDeleteProjectID);
+      populateToDoListContainerHeader(toDoToDeleteProjectID);
       addToDoButtonEvents();
+      addDeleteProjectButtonEvents(toDoToDeleteProjectID);
     } else {
     }
   });
