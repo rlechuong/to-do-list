@@ -109,6 +109,13 @@ const populateToDoItemDetailsContainer = function (id) {
   toDoDetailsProjectID.textContent = `Project ID: ${toDo["projectID"]}`;
   toDoDetailsItem.appendChild(toDoDetailsProjectID);
 
+  const deleteToDoButton = document.createElement("button");
+  deleteToDoButton.setAttribute("class", "delete-todo-button");
+  deleteToDoButton.setAttribute("data-todo-id", id);
+  deleteToDoButton.setAttribute("type", "button");
+  deleteToDoButton.textContent = "Delete This To Do";
+  toDoDetailsItem.appendChild(deleteToDoButton);
+
   toDoItemDetailsContainer.appendChild(toDoDetailsItem);
 };
 

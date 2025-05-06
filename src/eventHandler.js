@@ -4,6 +4,7 @@ import {
   createProject,
   createDefaultProject,
   createToDo,
+  deleteToDo,
 } from "./storage.js";
 import {
   populateProjects,
@@ -11,9 +12,13 @@ import {
   populateToDoListContainer,
   populateToDoItemDetailsContainer,
 } from "./displayController.js";
+import { getToDoByID } from "./filters.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 const newProjectDialog = document.querySelector("#new-project-dialog");
+const toDoItemDetailsContainer = document.querySelector(
+  "#todo-item-details-container"
+);
 
 const addAllEvents = function () {
   addNewToDoButtonEvents();
@@ -101,6 +106,7 @@ const addToDoButtonEvents = function () {
       const id = button.getAttribute("data-todo-id");
       console.log(id);
       populateToDoItemDetailsContainer(id);
+      addDeleteToDoButtonEvents(id);
     });
   });
 };
@@ -141,6 +147,21 @@ const addNewToDoDialogSubmitButtonEvents = function () {
   });
 };
 
+const addDeleteToDoButtonEvents = function (id) {
+  const toDoToDelete = getToDoByID(id);
+  const toDoToDeleteProjectID = toDoToDelete["projectID"];
+  const deleteToDoButton = document.querySelector(".delete-todo-button");
+  deleteToDoButton.addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete this To Do?")) {
+      deleteToDo(id);
+      toDoItemDetailsContainer.textContent = "";
+      populateToDoListContainer(toDoToDeleteProjectID);
+      addToDoButtonEvents();
+    } else {
+    }
+  });
+};
+
 export {
   addAllEvents,
   addNewToDoButtonEvents,
@@ -148,4 +169,5 @@ export {
   addNewToDoDialogSubmitButtonEvents,
   addProjectButtonEvents,
   addToDoButtonEvents,
+  addDeleteToDoButtonEvents,
 };
