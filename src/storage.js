@@ -47,6 +47,18 @@ const createToDo = function (
   toDos.push(newToDo);
 };
 
+const deleteProject = function (id) {
+  const indexToDelete = projects.findIndex(function (element) {
+    return element["id"] === id;
+  });
+
+  if (indexToDelete === 0) {
+    alert("Cannot delete Default");
+  } else {
+    projects.splice(indexToDelete, 1);
+  }
+};
+
 const deleteToDo = function (id) {
   const indexToDelete = toDos.findIndex(function (element) {
     return element["id"] === id;
@@ -64,5 +76,6 @@ export {
   createProject,
   createDefaultProject,
   createToDo,
+  deleteProject,
   deleteToDo,
 };

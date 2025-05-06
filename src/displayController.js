@@ -43,9 +43,20 @@ const populateToDoListContainer = function (id) {
   let toDoList = getMatchingProjectsToDos(id);
 
   const toDoListContainerProjectTitleContainer = document.createElement("div");
+  toDoListContainerProjectTitleContainer.setAttribute(
+    "id",
+    "todo-list-container-project-title-container"
+  );
   const toDoListContainerProjectTitle = getProjectByID(id)["name"];
   toDoListContainerProjectTitleContainer.textContent = `${toDoListContainerProjectTitle}`;
   toDoListContainer.appendChild(toDoListContainerProjectTitleContainer);
+
+  const deleteProjectButton = document.createElement("button");
+  deleteProjectButton.setAttribute("data-project-id", id);
+  deleteProjectButton.setAttribute("class", "delete-project-button");
+  deleteProjectButton.setAttribute("type", "button");
+  deleteProjectButton.textContent = "Delete This Project";
+  toDoListContainer.appendChild(deleteProjectButton);
 
   for (const toDo of toDoList) {
     const toDoListItem = document.createElement("button");
