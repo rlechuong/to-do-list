@@ -12,6 +12,7 @@ import {
   populateProjectDropDown,
   populateToDoListContainer,
   populateToDoItemDetailsContainer,
+  defaultView,
 } from "./displayController.js";
 import { getToDoByID } from "./filters.js";
 
@@ -31,6 +32,8 @@ const addAllEvents = function () {
   addToDoButtonEvents();
   addNewProjectButtonEvents();
   addNewProjectDialogSubmitButtonEvents();
+  addDeleteProjectButtonEvents();
+  addDeleteToDoButtonEvents();
 };
 
 const addNewProjectButtonEvents = function () {
@@ -163,6 +166,7 @@ const addDeleteProjectButtonEvents = function () {
       deleteProject(projectToDeleteID);
       populateProjects(getProjects());
       addProjectButtonEvents();
+      defaultView();
     }
   });
 };

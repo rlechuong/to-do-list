@@ -53,7 +53,7 @@ const deleteProject = function (id) {
   });
 
   if (indexToDelete === 0) {
-    alert("Cannot delete Default");
+    alert("Cannot Delete Default.");
   } else {
     projects.splice(indexToDelete, 1);
   }

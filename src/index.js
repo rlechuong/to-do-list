@@ -11,7 +11,10 @@ import {
   populateProjects,
   populateProjectDropDown,
   populateToDoListContainer,
+  defaultView,
 } from "./displayController.js";
+
+
 
 createDefaultProject();
 createProject("Test");
@@ -21,7 +24,9 @@ const userProjects = getProjects();
 populateProjects(userProjects);
 populateProjectDropDown(userProjects);
 
+defaultView();
 addAllEvents();
+
 
 // const projectData = localStorage.getItem("projects");
 

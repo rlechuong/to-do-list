@@ -6,17 +6,6 @@ import {
   createToDo,
 } from "./storage";
 
-const getMatchingProjectsToDosDefault = function () {
-  const todos = getToDos();
-  const projects = getProjects();
-
-  const matchingToDos = todos.filter(function (todo) {
-    return (todo["projectID"] = projects[0]["id"]);
-  });
-
-  return matchingToDos;
-};
-
 const getMatchingProjectsToDos = function (id) {
   const todos = getToDos();
 
@@ -44,9 +33,4 @@ const getToDoByID = function (id) {
   return matchingToDo;
 };
 
-export {
-  getMatchingProjectsToDosDefault,
-  getMatchingProjectsToDos,
-  getProjectByID,
-  getToDoByID,
-};
+export { getMatchingProjectsToDos, getProjectByID, getToDoByID };

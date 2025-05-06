@@ -1,9 +1,10 @@
 import {
-  getMatchingProjectsToDosDefault,
   getMatchingProjectsToDos,
   getProjectByID,
   getToDoByID,
 } from "./filters.js";
+
+import { getProjects } from "./storage.js";
 
 const mainNavProjectsContainer = document.querySelector(
   "#main-nav-projects-container"
@@ -12,6 +13,8 @@ const toDoListContainer = document.querySelector("#todo-list-container");
 const toDoItemDetailsContainer = document.querySelector(
   "#todo-item-details-container"
 );
+
+const selectedProjectID = "";
 
 const populateProjects = function (projectsArray) {
   mainNavProjectsContainer.textContent = "";
@@ -130,9 +133,16 @@ const populateToDoItemDetailsContainer = function (id) {
   toDoItemDetailsContainer.appendChild(toDoDetailsItem);
 };
 
+const defaultView = function () {
+  const defaultProjectID = getProjects()[0]["id"];
+  console.log(defaultProjectID);
+  populateToDoListContainer(defaultProjectID);
+};
+
 export {
   populateProjects,
   populateProjectDropDown,
   populateToDoListContainer,
   populateToDoItemDetailsContainer,
+  defaultView,
 };
