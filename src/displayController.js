@@ -1,6 +1,7 @@
 import {
   getMatchingProjectsToDosDefault,
   getMatchingProjectsToDos,
+  getProjectByID,
   getToDoByID,
 } from "./filters.js";
 
@@ -13,6 +14,8 @@ const toDoItemDetailsContainer = document.querySelector(
 );
 
 const populateProjects = function (projectsArray) {
+  mainNavProjectsContainer.textContent = "";
+
   for (const project of projectsArray) {
     const projectElement = document.createElement("button");
     projectElement.textContent = project["name"];
@@ -24,6 +27,8 @@ const populateProjects = function (projectsArray) {
 
 const populateProjectDropDown = function (projectsArray) {
   const projectDropDown = document.querySelector("#new-todo-project-dropdown");
+  projectDropDown.textContent = "";
+
   for (const project of projectsArray) {
     const dropDownOption = document.createElement("option");
     dropDownOption.setAttribute("value", project["id"]);
@@ -32,10 +37,15 @@ const populateProjectDropDown = function (projectsArray) {
   }
 };
 
-const populateToDoListContainerDefault = function (id) {
+const populateToDoListContainer = function (id) {
   toDoListContainer.textContent = "";
 
   let toDoList = getMatchingProjectsToDos(id);
+
+  const toDoListContainerProjectTitleContainer = document.createElement("div");
+  const toDoListContainerProjectTitle = getProjectByID(id)["name"];
+  toDoListContainerProjectTitleContainer.textContent = `${toDoListContainerProjectTitle}`;
+  toDoListContainer.appendChild(toDoListContainerProjectTitleContainer);
 
   for (const toDo of toDoList) {
     const toDoListItem = document.createElement("button");
@@ -43,7 +53,7 @@ const populateToDoListContainerDefault = function (id) {
     toDoListItem.setAttribute("class", "todo-button");
 
     const toDoListItemTitle = document.createElement("div");
-    toDoListItemTitle.textContent = `Name: ${toDo["title"]}`;
+    toDoListItemTitle.textContent = `Title: ${toDo["title"]}`;
     toDoListItem.appendChild(toDoListItemTitle);
 
     const toDoListItemDueDate = document.createElement("div");
@@ -72,7 +82,7 @@ const populateToDoItemDetailsContainer = function (id) {
   toDoDetailsItem.appendChild(toDoDetailsItemID);
 
   const toDoDetailsItemTitle = document.createElement("div");
-  toDoDetailsItemTitle.textContent = `Name: ${toDo["title"]}`;
+  toDoDetailsItemTitle.textContent = `Title: ${toDo["title"]}`;
   toDoDetailsItem.appendChild(toDoDetailsItemTitle);
 
   const toDoDetailsItemDescription = document.createElement("div");
@@ -105,6 +115,6 @@ const populateToDoItemDetailsContainer = function (id) {
 export {
   populateProjects,
   populateProjectDropDown,
-  populateToDoListContainerDefault,
+  populateToDoListContainer,
   populateToDoItemDetailsContainer,
 };

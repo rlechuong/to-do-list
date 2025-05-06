@@ -10,7 +10,7 @@ import { addAllEvents } from "./eventHandler.js";
 import {
   populateProjects,
   populateProjectDropDown,
-  populateToDoListContainerDefault,
+  populateToDoListContainer,
 } from "./displayController.js";
 
 createDefaultProject();
@@ -20,7 +20,6 @@ const userProjects = getProjects();
 
 populateProjects(userProjects);
 populateProjectDropDown(userProjects);
-populateToDoListContainerDefault();
 
 addAllEvents();
 

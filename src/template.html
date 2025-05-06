@@ -7,14 +7,38 @@
   </head>
   <body>
     <div id="main-header"></div>
-    <div id="main-nav">
-      <div id="main-nav-projects-container">
-        <div id="main-nav-projects-container-title">Projects</div>
-      </div>
-    </div>
-    <div id="main-display">
-      <button id="new-todo-button" type="button">New To-Do</button>
 
+    <div id="main-nav">
+      <div id="main-nav-projects-container-title">Projects</div>
+      <div id="main-nav-projects-container">
+      </div>
+      <button id="new-project-button" type="button">New Project</button>
+      <!-- Form to create new project. -->
+      <dialog id="new-project-dialog">
+        <button id="new-project-dialog-close-button" type="button">X</button>
+        <form>
+          <h1>New Project</h1>
+          <div>
+            <label for="new-project-title">Title</label>
+            <input
+              type="text"
+              id="new-project-title"
+              name="new-project-title"
+              required
+            />
+          </div>
+          <div>
+            <button id="new-project-dialog-submit-button" type="button">
+              Submit
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </div>
+
+    <div id="main-display">
+      <div id="toDoListContainerProjectTitleContainer"></div>
+      <button id="new-todo-button" type="button">New To-Do</button>
       <!-- Form to create new task.  -->
       <dialog id="new-todo-dialog">
         <button id="new-todo-dialog-close-button" type="button">X</button>

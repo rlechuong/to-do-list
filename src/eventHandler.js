@@ -8,18 +8,58 @@ import {
 import {
   populateProjects,
   populateProjectDropDown,
-  populateToDoListContainerDefault,
+  populateToDoListContainer,
   populateToDoItemDetailsContainer,
 } from "./displayController.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
+const newProjectDialog = document.querySelector("#new-project-dialog");
 
 const addAllEvents = function () {
   addNewToDoButtonEvents();
   addNewToDoDialogCloseButtonEvents();
+  addNewProjectDialogCloseButtonEvents();
   addNewToDoDialogSubmitButtonEvents();
   addProjectButtonEvents();
   addToDoButtonEvents();
+  addNewProjectButtonEvents();
+  addNewProjectDialogSubmitButtonEvents();
+};
+
+const addNewProjectButtonEvents = function () {
+  const newProjectButton = document.querySelector("#new-project-button");
+
+  newProjectButton.addEventListener("click", () => {
+    newProjectDialog.showModal();
+  });
+};
+
+const addNewProjectDialogCloseButtonEvents = function () {
+  const newProjectDialogCloseButton = document.querySelector(
+    "#new-project-dialog-close-button"
+  );
+
+  newProjectDialogCloseButton.addEventListener("click", () => {
+    newProjectDialog.close();
+  });
+};
+
+const addNewProjectDialogSubmitButtonEvents = function () {
+  const newProjectDialogSubmitButton = document.querySelector(
+    "#new-project-dialog-submit-button"
+  );
+
+  newProjectDialogSubmitButton.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    const newProjectTitle = document.querySelector("#new-project-title").value;
+
+    createProject(newProjectTitle);
+    populateProjects(getProjects());
+    populateProjectDropDown(getProjects());
+    addProjectButtonEvents();
+    newProjectDialog.close();
+  });
 };
 
 const addNewToDoButtonEvents = function () {
@@ -46,7 +86,7 @@ const addProjectButtonEvents = function () {
   projectButtonList.forEach(function (button) {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-project-id");
-      populateToDoListContainerDefault(id);
+      populateToDoListContainer(id);
 
       addToDoButtonEvents();
     });
@@ -95,8 +135,7 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       newToDoProjectID
     );
 
-    console.log(newToDoProjectID);
-    populateToDoListContainerDefault(newToDoProjectID);
+    populateToDoListContainer(newToDoProjectID);
     addToDoButtonEvents();
     newToDoDialog.close();
   });
