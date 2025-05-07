@@ -81,7 +81,7 @@
                 />
                 <label for="new-todo-very-high">Very High</label>
               </div>
-              <div id="new-todo-priority-container">
+              <div>
                 <input
                   type="radio"
                   id="new-todo-high"
@@ -143,13 +143,13 @@
           </div>
         </form>
       </dialog>
-
       <!-- Container that populates with list of To Dos -->
       <div id="todo-list-container"></div>
     </div>
+
     <div id="main-details">
       <div id="todo-details-container"></div>
-
+      <!-- Form for editing the title of a To Do -->
       <form id="edit-todo-title-form" hidden>
         <div id="edit-todo-title-header">Edit To Do Title</div>
         <div>
@@ -162,7 +162,134 @@
           />
         </div>
         <div>
-          <button id="edit-todo-title-button" type="button">Submit</button>
+          <button id="edit-todo-title-submit-button" type="button">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button class="edit-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </form>
+      <!-- Form for editing the description of a To Do -->
+      <form id="edit-todo-description-form" hidden>
+        <div id="edit-todo-description-header">Edit To Do Description</div>
+        <div>
+          <label for="edit-todo-description">Description</label>
+          <textarea
+            id="edit-todo-description"
+            name="edit-todo-description"
+            rows="4"
+            cols="50"
+          ></textarea>
+        </div>
+        <div>
+          <button id="edit-todo-description-submit-button" type="button">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button class="edit-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </form>
+      <!-- Form for editing the due date of a To Do -->
+      <form id="edit-todo-due-date-form" hidden>
+        <div id="edit-todo-due-date-header">Edit To Do Due Date</div>
+        <div>
+          <label for="edit-todo-due-date">Due Date</label>
+          <input
+            type="date"
+            id="edit-todo-due-date"
+            name="edit-todo-due-date"
+          />
+        </div>
+        <div>
+          <button id="edit-todo-due-date-submit-button" type="button">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button class="edit-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </form>
+      <!-- Form for editing the priority of a To Do -->
+      <form id="edit-todo-priority-form" hidden>
+        <div id="edit-todo-priority-header">Edit To Do Due Date</div>
+        <div>
+          <fieldset>
+            <legend>Priority</legend>
+            <div>
+              <input
+                type="radio"
+                id="edit-todo-very-high"
+                name="edit-todo-priority"
+                value="Very High"
+              />
+              <label for="edit-todo-very-high">Very High</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="edit-todo-high"
+                name="edit-todo-priority"
+                value="High"
+              />
+              <label for="edit-todo-high">High</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="edit-todo-medium"
+                name="edit-todo-priority"
+                value="Medium"
+                checked
+              />
+              <label for="edit-todo-medium">Medium</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="edit-todo-low"
+                name="edit-todo-priority"
+                value="Low"
+              />
+              <label for="edit-todo-low">Low</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="edit-todo-very-low"
+                name="edit-todo-priority"
+                value="Very Low"
+              />
+              <label for="edit-todo-very-low">Very Low</label>
+            </div>
+          </fieldset>
+        </div>
+        <div>
+          <button id="edit-todo-priority-submit-button" type="button">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button class="edit-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </form>
+      <!-- Form for editing the notes of a To Do -->
+      <form id="edit-todo-notes-form" hidden>
+        <div id="edit-todo-notes-header">Edit To Do Description</div>
+        <div>
+          <label for="edit-todo-notes">Notes</label>
+          <textarea
+            id="edit-todo-notes"
+            name="edit-todo-notes"
+            rows="4"
+            cols="50"
+          ></textarea>
+        </div>
+        <div>
+          <button id="edit-todo-notes-submit-button" type="button">
+            Submit
+          </button>
         </div>
         <div>
           <button class="edit-todo-cancel-button" type="button">Cancel</button>

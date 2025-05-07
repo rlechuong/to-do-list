@@ -137,6 +137,12 @@ const populateToDoItemDetails = function (id) {
   toDoDescriptionHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoDescriptionHeader.textContent = "Description";
   toDoDescriptionContainer.appendChild(toDoDescriptionHeader);
+  const editToDoDescriptionButton = document.createElement("button");
+  editToDoDescriptionButton.setAttribute("id", "edit-todo-description-button");
+  editToDoDescriptionButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoDescriptionButton.setAttribute("type", "button");
+  editToDoDescriptionButton.textContent = "Edit";
+  toDoDescriptionContainer.appendChild(editToDoDescriptionButton);
   const toDoDescriptionContent = document.createElement("div");
   toDoDescriptionContent.setAttribute("id", "todo-description-content");
   toDoDescriptionContent.setAttribute("data-todo-id", toDo["id"]);
@@ -153,6 +159,12 @@ const populateToDoItemDetails = function (id) {
   toDoDueDateHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoDueDateHeader.textContent = "Due Date";
   toDoDueDateContainer.appendChild(toDoDueDateHeader);
+  const editToDoDueDateButton = document.createElement("button");
+  editToDoDueDateButton.setAttribute("id", "edit-todo-due-date-button");
+  editToDoDueDateButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoDueDateButton.setAttribute("type", "button");
+  editToDoDueDateButton.textContent = "Edit";
+  toDoDueDateContainer.appendChild(editToDoDueDateButton);
   const toDoDueDateContent = document.createElement("div");
   toDoDueDateContent.setAttribute("id", "todo-due-date-content");
   toDoDueDateContent.setAttribute("data-todo-id", toDo["id"]);
@@ -169,6 +181,12 @@ const populateToDoItemDetails = function (id) {
   toDoPriorityHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoPriorityHeader.textContent = "Priority";
   toDoPriorityContainer.appendChild(toDoPriorityHeader);
+  const editToDoPriorityButton = document.createElement("button");
+  editToDoPriorityButton.setAttribute("id", "edit-todo-priority-button");
+  editToDoPriorityButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoPriorityButton.setAttribute("type", "button");
+  editToDoPriorityButton.textContent = "Edit";
+  toDoPriorityContainer.appendChild(editToDoPriorityButton);
   const toDoPriorityContent = document.createElement("div");
   toDoPriorityContent.setAttribute("id", "todo-priority-content");
   toDoPriorityContent.setAttribute("data-todo-id", toDo["id"]);
@@ -185,6 +203,12 @@ const populateToDoItemDetails = function (id) {
   toDoNotesHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoNotesHeader.textContent = "Notes";
   toDoNotesContainer.appendChild(toDoNotesHeader);
+  const editToDoNotesButton = document.createElement("button");
+  editToDoNotesButton.setAttribute("id", "edit-todo-notes-button");
+  editToDoNotesButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoNotesButton.setAttribute("type", "button");
+  editToDoNotesButton.textContent = "Edit";
+  toDoNotesContainer.appendChild(editToDoNotesButton);
   const toDoNotesContent = document.createElement("div");
   toDoNotesContent.setAttribute("id", "todo-notes-content");
   toDoNotesContent.setAttribute("data-todo-id", toDo["id"]);
@@ -193,21 +217,21 @@ const populateToDoItemDetails = function (id) {
 
   toDoDetailsContainer.appendChild(toDoNotesContainer);
 
-  const toDoChecklistContainer = document.createElement("div");
-  toDoChecklistContainer.setAttribute("id", "todo-checklist-container");
-  toDoChecklistContainer.setAttribute("data-todo-id", toDo["id"]);
-  const toDoChecklistHeader = document.createElement("div");
-  toDoChecklistHeader.setAttribute("id", "todo-checklist-header");
-  toDoChecklistHeader.setAttribute("data-todo-id", toDo["id"]);
-  toDoChecklistHeader.textContent = "Checklist";
-  toDoChecklistContainer.appendChild(toDoChecklistHeader);
-  const toDoChecklistContent = document.createElement("div");
-  toDoChecklistContent.setAttribute("id", "todo-checklist-content");
-  toDoChecklistContent.setAttribute("data-todo-id", toDo["id"]);
-  toDoChecklistContent.textContent = `${toDo["checklist"]}`;
-  toDoChecklistContainer.appendChild(toDoChecklistContent);
+  // const toDoChecklistContainer = document.createElement("div");
+  // toDoChecklistContainer.setAttribute("id", "todo-checklist-container");
+  // toDoChecklistContainer.setAttribute("data-todo-id", toDo["id"]);
+  // const toDoChecklistHeader = document.createElement("div");
+  // toDoChecklistHeader.setAttribute("id", "todo-checklist-header");
+  // toDoChecklistHeader.setAttribute("data-todo-id", toDo["id"]);
+  // toDoChecklistHeader.textContent = "Checklist";
+  // toDoChecklistContainer.appendChild(toDoChecklistHeader);
+  // const toDoChecklistContent = document.createElement("div");
+  // toDoChecklistContent.setAttribute("id", "todo-checklist-content");
+  // toDoChecklistContent.setAttribute("data-todo-id", toDo["id"]);
+  // toDoChecklistContent.textContent = `${toDo["checklist"]}`;
+  // toDoChecklistContainer.appendChild(toDoChecklistContent);
 
-  toDoDetailsContainer.appendChild(toDoChecklistContainer);
+  // toDoDetailsContainer.appendChild(toDoChecklistContainer);
 
   const toDoProjectIDContainer = document.createElement("div");
   toDoProjectIDContainer.setAttribute("id", "todo-projectID-container");

@@ -34,7 +34,7 @@ const addAllEvents = function () {
   addDeleteProjectButtonEvents();
 };
 
-let activeToDo = {}
+let activeToDo = {};
 
 const addNewProjectButtonEvents = function () {
   const newProjectButton = document.querySelector("#new-project-button");
@@ -128,7 +128,7 @@ const addToDoButtonEvents = function () {
       console.log(id);
       populateToDoItemDetails(id);
       addDeleteToDoButtonEvents(id);
-      editToDoTitleButton();
+      editFormButtons();
     });
   });
 };
@@ -220,58 +220,227 @@ const addDeleteToDoButtonEvents = function (id) {
 const editToDoTitleButton = function () {
   const toDoTitleButton = document.querySelector("#edit-todo-title-button");
 
-  // const toDoID = document
-  //   .querySelector("#todo-title-container")
-  //   .getAttribute("data-todo-id");
-
-  // const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
-  // editToDoTitleForm.setAttribute("data-todo-id", toDoID);
-
   toDoTitleButton.addEventListener("click", () => {
     toDoDetailsContainer.textContent = "";
     const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
     const editToDoTitleInput = document.querySelector("#edit-todo-title");
     editToDoTitleInput.value = activeToDo["title"];
     editToDoTitleForm.hidden = false;
-    editToDoCancelButton();
-    editToDoSubmitButton();
+    editToDoCancelButtons();
+    editToDoTitleSubmitButton();
   });
 };
 
-const editToDoSubmitButton = function () {
+const editToDoTitleSubmitButton = function () {
   const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
-  // const toDoID = document
-  //   .querySelector("#edit-todo-title-form")
-  //   .getAttribute("data-todo-id");
 
-  const toDoSubmitButton = document.querySelector("#edit-todo-title-button");
-  toDoSubmitButton.addEventListener("click", () => {
-    // const toDoToEdit = getToDoByID(toDoID);
+  const toTitleDoSubmitButton = document.querySelector(
+    "#edit-todo-title-submit-button"
+  );
+  toTitleDoSubmitButton.addEventListener("click", () => {
     const newValue = document.querySelector("#edit-todo-title").value;
-    console.log(activeToDo);
     activeToDo["title"] = newValue;
-    console.log(activeToDo);
     editToDoTitleForm.hidden = true;
     populateToDoItemDetails(activeToDo["id"]);
     populateToDoListContainer(activeToDo["projectID"]);
-    editToDoTitleButton();
+    editFormButtons();
     addDeleteToDoButtonEvents(activeToDo["id"]);
   });
 };
 
-const editToDoCancelButton = function () {
-  const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
-  // const toDoID = document
-  //   .querySelector("#edit-todo-title-form")
-  //   .getAttribute("data-todo-id");
+const editToDoDescriptionButton = function () {
+  const toDoDescriptionButton = document.querySelector(
+    "#edit-todo-description-button"
+  );
 
-  const ToDoCancelButton = document.querySelector(".edit-todo-cancel-button");
-  ToDoCancelButton.addEventListener("click", () => {
+  toDoDescriptionButton.addEventListener("click", () => {
+    toDoDetailsContainer.textContent = "";
+    const editToDoDescriptionForm = document.querySelector(
+      "#edit-todo-description-form"
+    );
+    const editToDoDescriptionInput = document.querySelector(
+      "#edit-todo-description"
+    );
+    editToDoDescriptionInput.value = activeToDo["description"];
+    editToDoDescriptionForm.hidden = false;
+    editToDoCancelButtons();
+    editToDoDescriptionSubmitButton();
+  });
+};
+
+const editToDoDescriptionSubmitButton = function () {
+  const editToDoDescriptionForm = document.querySelector(
+    "#edit-todo-description-form"
+  );
+
+  const toDoDescriptionSubmitButton = document.querySelector(
+    "#edit-todo-description-submit-button"
+  );
+  toDoDescriptionSubmitButton.addEventListener("click", () => {
+    const newValue = document.querySelector("#edit-todo-description").value;
+    activeToDo["description"] = newValue;
+    editToDoDescriptionForm.hidden = true;
     populateToDoItemDetails(activeToDo["id"]);
-    editToDoTitleForm.hidden = true;
-    editToDoTitleButton();
+    populateToDoListContainer(activeToDo["projectID"]);
+    editFormButtons();
     addDeleteToDoButtonEvents(activeToDo["id"]);
   });
+};
+
+const editToDoDueDateButton = function () {
+  const toDoDueDateButton = document.querySelector(
+    "#edit-todo-due-date-button"
+  );
+
+  toDoDueDateButton.addEventListener("click", () => {
+    toDoDetailsContainer.textContent = "";
+    const editToDoDueDateForm = document.querySelector(
+      "#edit-todo-due-date-form"
+    );
+    const editToDoDueDateInput = document.querySelector("#edit-todo-due-date");
+    editToDoDueDateInput.value = activeToDo["dueDate"];
+    editToDoDueDateForm.hidden = false;
+    editToDoCancelButtons();
+    editToDoDueDateSubmitButton();
+  });
+};
+
+const editToDoDueDateSubmitButton = function () {
+  const editToDoDueDateForm = document.querySelector(
+    "#edit-todo-due-date-form"
+  );
+
+  const toDoDueDateSubmitButton = document.querySelector(
+    "#edit-todo-due-date-submit-button"
+  );
+  toDoDueDateSubmitButton.addEventListener("click", () => {
+    const newValue = document.querySelector("#edit-todo-due-date").value;
+    activeToDo["dueDate"] = newValue;
+    editToDoDueDateForm.hidden = true;
+    populateToDoItemDetails(activeToDo["id"]);
+    populateToDoListContainer(activeToDo["projectID"]);
+    editFormButtons();
+    addDeleteToDoButtonEvents(activeToDo["id"]);
+  });
+};
+
+const editToDoPriorityButton = function () {
+  const editToDoPriorityButton = document.querySelector(
+    "#edit-todo-priority-button"
+  );
+
+  editToDoPriorityButton.addEventListener("click", () => {
+    toDoDetailsContainer.textContent = "";
+    const editToDoPriorityForm = document.querySelector(
+      "#edit-todo-priority-form"
+    );
+    const editToDoPriorityRadioButtons = document.querySelectorAll(
+      `input[type="radio"][name="edit-todo-priority"]`
+    );
+    editToDoPriorityRadioButtons.forEach(function (button) {
+      if (button["value"] === activeToDo["priority"]) {
+        button.checked = true;
+      }
+    });
+    editToDoPriorityForm.hidden = false;
+    editToDoCancelButtons();
+    editToDoPrioritySubmitButton();
+  });
+};
+
+const editToDoPrioritySubmitButton = function () {
+  const editToDoPriorityForm = document.querySelector(
+    "#edit-todo-priority-form"
+  );
+
+  const toDoPrioritySubmitButton = document.querySelector(
+    "#edit-todo-priority-submit-button"
+  );
+  toDoPrioritySubmitButton.addEventListener("click", () => {
+    const newValue = document.querySelector(
+      `input[name="edit-todo-priority"]:checked`
+    ).value;
+    activeToDo["priority"] = newValue;
+    editToDoPriorityForm.hidden = true;
+    populateToDoItemDetails(activeToDo["id"]);
+    populateToDoListContainer(activeToDo["projectID"]);
+    editFormButtons();
+    addDeleteToDoButtonEvents(activeToDo["id"]);
+  });
+};
+
+const editToDoNotesButton = function () {
+  const editToDoNotesButton = document.querySelector("#edit-todo-notes-button");
+
+  editToDoNotesButton.addEventListener("click", () => {
+    toDoDetailsContainer.textContent = "";
+    const editToDoNotesForm = document.querySelector("#edit-todo-notes-form");
+    const editToDoNotesInput = document.querySelector("#edit-todo-notes");
+    editToDoNotesInput.value = activeToDo["notes"];
+    editToDoNotesForm.hidden = false;
+    editToDoCancelButtons();
+    editToDoNotesSubmitButton();
+  });
+};
+
+const editToDoNotesSubmitButton = function () {
+  const editToDoNotesForm = document.querySelector(
+    "#edit-todo-notes-form"
+  );
+
+  const toDoNotesSubmitButton = document.querySelector(
+    "#edit-todo-notes-submit-button"
+  );
+  toDoNotesSubmitButton.addEventListener("click", () => {
+    const newValue = document.querySelector("#edit-todo-notes").value;
+    activeToDo["notes"] = newValue;
+    editToDoNotesForm.hidden = true;
+    populateToDoItemDetails(activeToDo["id"]);
+    populateToDoListContainer(activeToDo["projectID"]);
+    editFormButtons();
+    addDeleteToDoButtonEvents(activeToDo["id"]);
+  });
+};
+
+const editToDoCancelButtons = function () {
+  const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
+  const editToDoDescriptionForm = document.querySelector(
+    "#edit-todo-description-form"
+  );
+  const editToDoDueDateForm = document.querySelector(
+    "#edit-todo-due-date-form"
+  );
+  const editToDoPriorityForm = document.querySelector(
+    "#edit-todo-priority-form"
+  );
+  const editToDoNotesForm = document.querySelector(
+    "#edit-todo-notes-form"
+  );
+
+  const ToDoCancelButtons = document.querySelectorAll(
+    ".edit-todo-cancel-button"
+  );
+  ToDoCancelButtons.forEach(function (button) {
+    button.addEventListener("click", () => {
+      populateToDoItemDetails(activeToDo["id"]);
+      addDeleteToDoButtonEvents(activeToDo["id"]);
+      editToDoDescriptionForm.hidden = true;
+      editToDoTitleForm.hidden = true;
+      editToDoTitleForm.hidden = true;
+      editToDoDueDateForm.hidden = true;
+      editToDoPriorityForm.hidden = true;
+      editToDoNotesForm.hidden = true;
+      editFormButtons();
+    });
+  });
+};
+
+const editFormButtons = function () {
+  editToDoTitleButton();
+  editToDoDescriptionButton();
+  editToDoDueDateButton();
+  editToDoPriorityButton();
+  editToDoNotesButton();
 };
 
 export {

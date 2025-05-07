@@ -67,6 +67,10 @@ h6 {
   isolation: isolate;
 }
 
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
   display: grid;
   grid-template-columns: 1fr 6fr 3fr;

@@ -14,8 +14,6 @@ import {
   defaultView,
 } from "./displayController.js";
 
-
-
 createDefaultProject();
 createProject("Test");
 
@@ -26,7 +24,6 @@ populateProjectDropDown(userProjects);
 
 defaultView();
 addAllEvents();
-
 
 // const projectData = localStorage.getItem("projects");
 
