@@ -34,6 +34,8 @@ const addAllEvents = function () {
   addDeleteProjectButtonEvents();
 };
 
+let activeToDo = {}
+
 const addNewProjectButtonEvents = function () {
   const newProjectButton = document.querySelector("#new-project-button");
 
@@ -121,9 +123,12 @@ const addToDoButtonEvents = function () {
   toDoButtonList.forEach(function (button) {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-todo-id");
+      activeToDo = getToDoByID(id);
+      console.log(activeToDo);
       console.log(id);
       populateToDoItemDetails(id);
       addDeleteToDoButtonEvents(id);
+      editToDoTitleButton();
     });
   });
 };
@@ -181,7 +186,6 @@ const addDeleteProjectButtonEvents = function () {
     projectToDeleteButton.getAttribute("data-project-id");
   console.log(projectToDeleteID);
 
-  //fix this need to remove details pane and also add event to to do
   projectToDeleteButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this Project?")) {
       deleteProject(projectToDeleteID);
@@ -213,6 +217,63 @@ const addDeleteToDoButtonEvents = function (id) {
   });
 };
 
+const editToDoTitleButton = function () {
+  const toDoTitleButton = document.querySelector("#edit-todo-title-button");
+
+  // const toDoID = document
+  //   .querySelector("#todo-title-container")
+  //   .getAttribute("data-todo-id");
+
+  // const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
+  // editToDoTitleForm.setAttribute("data-todo-id", toDoID);
+
+  toDoTitleButton.addEventListener("click", () => {
+    toDoDetailsContainer.textContent = "";
+    const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
+    const editToDoTitleInput = document.querySelector("#edit-todo-title");
+    editToDoTitleInput.value = activeToDo["title"];
+    editToDoTitleForm.hidden = false;
+    editToDoCancelButton();
+    editToDoSubmitButton();
+  });
+};
+
+const editToDoSubmitButton = function () {
+  const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
+  // const toDoID = document
+  //   .querySelector("#edit-todo-title-form")
+  //   .getAttribute("data-todo-id");
+
+  const toDoSubmitButton = document.querySelector("#edit-todo-title-button");
+  toDoSubmitButton.addEventListener("click", () => {
+    // const toDoToEdit = getToDoByID(toDoID);
+    const newValue = document.querySelector("#edit-todo-title").value;
+    console.log(activeToDo);
+    activeToDo["title"] = newValue;
+    console.log(activeToDo);
+    editToDoTitleForm.hidden = true;
+    populateToDoItemDetails(activeToDo["id"]);
+    populateToDoListContainer(activeToDo["projectID"]);
+    editToDoTitleButton();
+    addDeleteToDoButtonEvents(activeToDo["id"]);
+  });
+};
+
+const editToDoCancelButton = function () {
+  const editToDoTitleForm = document.querySelector("#edit-todo-title-form");
+  // const toDoID = document
+  //   .querySelector("#edit-todo-title-form")
+  //   .getAttribute("data-todo-id");
+
+  const ToDoCancelButton = document.querySelector(".edit-todo-cancel-button");
+  ToDoCancelButton.addEventListener("click", () => {
+    populateToDoItemDetails(activeToDo["id"]);
+    editToDoTitleForm.hidden = true;
+    editToDoTitleButton();
+    addDeleteToDoButtonEvents(activeToDo["id"]);
+  });
+};
+
 export {
   addAllEvents,
   addNewProjectButtonEvents,
@@ -225,4 +286,5 @@ export {
   addToDoButtonEvents,
   addDeleteProjectButtonEvents,
   addDeleteToDoButtonEvents,
+  editToDoTitleButton,
 };

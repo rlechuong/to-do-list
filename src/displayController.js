@@ -115,6 +115,12 @@ const populateToDoItemDetails = function (id) {
   toDoTitleHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoTitleHeader.textContent = "Title";
   toDoTitleContainer.appendChild(toDoTitleHeader);
+  const editToDoTitleButton = document.createElement("button");
+  editToDoTitleButton.setAttribute("id", "edit-todo-title-button");
+  editToDoTitleButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoTitleButton.setAttribute("type", "button");
+  editToDoTitleButton.textContent = "Edit";
+  toDoTitleContainer.appendChild(editToDoTitleButton);
   const toDoTitleContent = document.createElement("div");
   toDoTitleContent.setAttribute("id", "todo-title-content");
   toDoTitleContent.setAttribute("data-todo-id", toDo["id"]);
