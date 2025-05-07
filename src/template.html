@@ -77,7 +77,7 @@
                   type="radio"
                   id="new-todo-very-high"
                   name="new-todo-priority"
-                  value="very-high"
+                  value="Very High"
                 />
                 <label for="new-todo-very-high">Very High</label>
               </div>
@@ -86,7 +86,7 @@
                   type="radio"
                   id="new-todo-high"
                   name="new-todo-priority"
-                  value="high"
+                  value="High"
                 />
                 <label for="new-todo-high">High</label>
               </div>
@@ -95,7 +95,7 @@
                   type="radio"
                   id="new-todo-medium"
                   name="new-todo-priority"
-                  value="medium"
+                  value="Medium"
                   checked
                 />
                 <label for="new-todo-medium">Medium</label>
@@ -105,7 +105,7 @@
                   type="radio"
                   id="new-todo-low"
                   name="new-todo-priority"
-                  value="low"
+                  value="Low"
                 />
                 <label for="new-todo-low">Low</label>
               </div>
@@ -114,11 +114,20 @@
                   type="radio"
                   id="new-todo-very-low"
                   name="new-todo-priority"
-                  value="very-low"
+                  value="Very Low"
                 />
                 <label for="new-todo-very-low">Very Low</label>
               </div>
             </fieldset>
+          </div>
+          <div>
+            <label for="new-todo-notes">Notes</label>
+            <textarea
+              id="new-todo-notes"
+              name="new-todo-notes"
+              rows="4"
+              cols="50"
+            ></textarea>
           </div>
           <div id="create-todo-project-dropdown">
             <label for="new-todo-project-dropdown">Project</label>
@@ -139,7 +148,7 @@
       <div id="todo-list-container"></div>
     </div>
     <div id="main-details">
-      <div id="todo-item-details-container"></div>
+      <div id="todo-details-container"></div>
     </div>
   </body>
 </html>

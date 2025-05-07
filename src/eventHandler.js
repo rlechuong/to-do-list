@@ -12,17 +12,15 @@ import {
   populateProjectDropDown,
   populateToDoListContainerHeader,
   populateToDoListContainer,
-  populateToDoItemDetailsContainer,
+  populateToDoItemDetails,
   defaultView,
 } from "./displayController.js";
-import { getToDoByID, getProjectByID } from "./filters.js";
+import { getToDoByID } from "./filters.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 const newProjectDialog = document.querySelector("#new-project-dialog");
 const toDoListContainer = document.querySelector("#todo-list-container");
-const toDoItemDetailsContainer = document.querySelector(
-  "#todo-item-details-container"
-);
+const toDoDetailsContainer = document.querySelector("#todo-details-container");
 
 const addAllEvents = function () {
   addNewToDoButtonEvents();
@@ -124,7 +122,7 @@ const addToDoButtonEvents = function () {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-todo-id");
       console.log(id);
-      populateToDoItemDetailsContainer(id);
+      populateToDoItemDetails(id);
       addDeleteToDoButtonEvents(id);
     });
   });
@@ -152,13 +150,14 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       const newToDoProjectID = document.querySelector(
         "#new-todo-project-dropdown"
       ).value;
+      const newToDoNotes = document.querySelector("#new-todo-notes").value;
 
       createToDo(
         newToDoTitle,
         newToDoDescription,
         newToDoDueDate,
         newToDoPriority,
-        "",
+        newToDoNotes,
         "",
         newToDoProjectID
       );
@@ -182,14 +181,17 @@ const addDeleteProjectButtonEvents = function () {
     projectToDeleteButton.getAttribute("data-project-id");
   console.log(projectToDeleteID);
 
+  //fix this need to remove details pane and also add event to to do
   projectToDeleteButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this Project?")) {
       deleteProject(projectToDeleteID);
+      toDoDetailsContainer.textContent = "";
       populateProjects(getProjects());
       populateProjectDropDown(getProjects());
       addProjectButtonEvents();
       defaultView();
       addDeleteProjectButtonEvents();
+      addToDoButtonEvents();
     }
   });
 };
@@ -201,7 +203,7 @@ const addDeleteToDoButtonEvents = function (id) {
   deleteToDoButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this To Do?")) {
       deleteToDo(id);
-      toDoItemDetailsContainer.textContent = "";
+      toDoDetailsContainer.textContent = "";
       populateToDoListContainer(toDoToDeleteProjectID);
       populateToDoListContainerHeader(toDoToDeleteProjectID);
       addToDoButtonEvents();
@@ -213,6 +215,9 @@ const addDeleteToDoButtonEvents = function (id) {
 
 export {
   addAllEvents,
+  addNewProjectButtonEvents,
+  addNewProjectDialogCloseButtonEvents,
+  addNewProjectDialogSubmitButtonEvents,
   addNewToDoButtonEvents,
   addNewToDoDialogCloseButtonEvents,
   addNewToDoDialogSubmitButtonEvents,
