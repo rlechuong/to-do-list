@@ -3,8 +3,8 @@ import {
   getProjectByID,
   getToDoByID,
 } from "./filters.js";
-
 import { getProjects } from "./storage.js";
+import { differenceInDays } from "date-fns";
 
 const mainNavProjectsContainer = document.querySelector(
   "#main-nav-projects-container"
@@ -66,6 +66,9 @@ const populateToDoListContainer = function (id) {
   let toDoList = getMatchingProjectsToDos(id);
 
   for (const toDo of toDoList) {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const daysDue = differenceInDays(toDo["dueDate"], currentDate);
+
     const toDoListItem = document.createElement("button");
     toDoListItem.setAttribute("data-todo-id", toDo["id"]);
     toDoListItem.setAttribute("class", "todo-button");
@@ -77,6 +80,10 @@ const populateToDoListContainer = function (id) {
     const toDoListItemDueDate = document.createElement("div");
     toDoListItemDueDate.textContent = `Due Date: ${toDo["dueDate"]}`;
     toDoListItem.appendChild(toDoListItemDueDate);
+
+    const toDoListDaysDue = document.createElement("div");
+    toDoListDaysDue.textContent = `Due In ${daysDue} days.`;
+    toDoListItem.appendChild(toDoListDaysDue);
 
     const toDoListPriority = document.createElement("div");
     toDoListPriority.textContent = `Priority: ${toDo["priority"]}`;
