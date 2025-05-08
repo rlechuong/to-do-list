@@ -1,3 +1,4 @@
+import { el } from "date-fns/locale";
 import {
   getMatchingProjectsToDos,
   getProjectByID,
@@ -66,9 +67,6 @@ const populateToDoListContainer = function (id) {
   let toDoList = getMatchingProjectsToDos(id);
 
   for (const toDo of toDoList) {
-    const currentDate = new Date().toISOString().slice(0, 10);
-    const daysDue = differenceInDays(toDo["dueDate"], currentDate);
-
     const toDoListItem = document.createElement("button");
     toDoListItem.setAttribute("data-todo-id", toDo["id"]);
     toDoListItem.setAttribute("class", "todo-button");
@@ -77,17 +75,53 @@ const populateToDoListContainer = function (id) {
     toDoListItemTitle.textContent = `Title: ${toDo["title"]}`;
     toDoListItem.appendChild(toDoListItemTitle);
 
-    const toDoListItemDueDate = document.createElement("div");
-    toDoListItemDueDate.textContent = `Due Date: ${toDo["dueDate"]}`;
-    toDoListItem.appendChild(toDoListItemDueDate);
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const daysDue = differenceInDays(toDo["dueDate"], currentDate);
 
-    const toDoListDaysDue = document.createElement("div");
-    toDoListDaysDue.textContent = `Due In ${daysDue} days.`;
-    toDoListItem.appendChild(toDoListDaysDue);
+    if (toDo["dueDate"]) {
+      const toDoListItemDueDate = document.createElement("div");
+      toDoListItemDueDate.textContent = `Due Date: ${toDo["dueDate"]}`;
+      toDoListItem.appendChild(toDoListItemDueDate);
+
+      const toDoListDaysDue = document.createElement("div");
+      if (daysDue > 0) {
+        toDoListDaysDue.textContent = `Due In ${daysDue} days.`;
+      } else if (daysDue < 0) {
+        toDoListDaysDue.textContent = `Due ${daysDue * -1} days ago.`;
+      } else if (daysDue === 0) {
+        toDoListDaysDue.textContent = `Due Today.`;
+      }
+      toDoListItem.appendChild(toDoListDaysDue);
+    }
 
     const toDoListPriority = document.createElement("div");
     toDoListPriority.textContent = `Priority: ${toDo["priority"]}`;
     toDoListItem.appendChild(toDoListPriority);
+
+    const priorityToColor = toDo["priority"];
+    let priorityColor;
+
+    if (priorityToColor === "Very High") {
+      priorityColor = "rgba(255, 0, 0, 1)";
+    } else if (priorityToColor === "High") {
+      priorityColor = "rgba(255, 165, 0, 1)";
+    } else if (priorityToColor === "Medium") {
+      priorityColor = "rgba(255, 255, 0, 1)";
+    } else if (priorityToColor === "Low") {
+      priorityColor = "rgba(0, 255, 0, 1)";
+    } else if (priorityToColor === "Very Low") {
+      priorityColor = "rgba(0, 165, 255, 1)";
+    }
+
+    const priorityColorBar = document.createElement("div");
+    priorityColorBar.textContent = "test";
+    console.log(priorityColor);
+    priorityColorBar.setAttribute(
+      "style",
+      // `background-color: ${priorityColor}`
+      "background-image: linear-gradient(to right, red, white 20%);"
+    );
+    toDoListItem.appendChild(priorityColorBar);
 
     toDoListContainer.appendChild(toDoListItem);
   }

@@ -2,27 +2,47 @@ import { Project } from "./project.js";
 import { ToDo } from "./todo.js";
 import { getMatchingProjectsToDos } from "./filters.js";
 
-const projects = [];
-const toDos = [];
+let projects = [];
+let toDos = [];
 
-const getProjects = function () {
-  return projects;
+const saveProjectsToStorage = function (array) {
+  localStorage.setItem("projects", JSON.stringify(array));
 };
 
-const getToDos = function () {
-  return toDos;
+const saveToDosToStorage = function (array) {
+  localStorage.setItem("toDos", JSON.stringify(array));
+};
+
+const getProjects = function () {
+  if (localStorage.getItem("projects")) {
+    projects = JSON.parse(localStorage.getItem("projects"));
+    return projects;
+  } else {
+    createDefaultProject();
+  }
 };
 
 const createProject = function (name) {
   const newProject = new Project(name);
   projects.push(newProject);
+  saveProjectsToStorage(projects);
 };
 
 const createDefaultProject = function () {
   if (projects.length === 0) {
     const newProject = new Project("Default");
     projects.push(newProject);
+    saveProjectsToStorage(projects);
   } else {
+  }
+};
+
+const getToDos = function () {
+  if (localStorage.getItem("toDos")) {
+    toDos = JSON.parse(localStorage.getItem("toDos"));
+    return toDos;
+  } else {
+    return toDos;
   }
 };
 
@@ -46,6 +66,7 @@ const createToDo = function (
   );
 
   toDos.push(newToDo);
+  saveToDosToStorage(toDos);
 };
 
 const deleteProject = function (id) {
@@ -53,23 +74,18 @@ const deleteProject = function (id) {
     return element["id"] === id;
   });
 
-  console.log(getToDos());
-
   if (indexToDelete === 0) {
-    alert("Cannot Delete Default.");
+    alert("Cannot Delete First Project.");
   } else {
     const toDosToDelete = getMatchingProjectsToDos(id);
-
-    console.log(toDosToDelete);
 
     for (const todo of toDosToDelete) {
       deleteToDo(todo["id"]);
     }
 
     projects.splice(indexToDelete, 1);
+    saveProjectsToStorage(projects);
   }
-
-  console.log(getToDos());
 };
 
 const deleteToDo = function (id) {
@@ -78,9 +94,12 @@ const deleteToDo = function (id) {
   });
 
   toDos.splice(indexToDelete, 1);
+  saveToDosToStorage(toDos);
 };
 
 export {
+  saveProjectsToStorage,
+  saveToDosToStorage,
   getProjects,
   getToDos,
   createProject,

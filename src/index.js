@@ -15,18 +15,10 @@ import {
 } from "./displayController.js";
 import { differenceInDays } from "date-fns";
 
-const day = new Date();
-const result = differenceInDays("2025-05-14", "2025-05-16");
-console.log(day.toISOString().slice(0,10));
-
-createDefaultProject();
-createProject("Test");
-
 const userProjects = getProjects();
 
 populateProjects(userProjects);
 populateProjectDropDown(userProjects);
-
 defaultView();
 addAllEvents();
 
