@@ -37,6 +37,18 @@ const populateProjectDropDown = function (projectsArray) {
   }
 };
 
+const populateProjectDropDownEdit = function (projectsArray) {
+  const projectDropDown = document.querySelector("#edit-todo-project-dropdown");
+  projectDropDown.textContent = "";
+
+  for (const project of projectsArray) {
+    const dropDownOption = document.createElement("option");
+    dropDownOption.setAttribute("value", project["id"]);
+    dropDownOption.textContent = project["name"];
+    projectDropDown.appendChild(dropDownOption);
+  }
+};
+
 const populateToDoListContainerHeader = function (id) {
   const toDoListContainerHeader = document.querySelector(
     "#todo-list-container-header"
@@ -282,6 +294,12 @@ const populateToDoItemDetails = function (id) {
   toDoProjectIDHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoProjectIDHeader.textContent = "Project ID";
   toDoProjectIDContainer.appendChild(toDoProjectIDHeader);
+  const editToDoProjectButton = document.createElement("button");
+  editToDoProjectButton.setAttribute("id", "edit-todo-project-button");
+  editToDoProjectButton.setAttribute("data-todo-id", toDo["id"]);
+  editToDoProjectButton.setAttribute("type", "button");
+  editToDoProjectButton.textContent = "Edit";
+  toDoProjectIDContainer.appendChild(editToDoProjectButton);
   const toDoProjectIDContent = document.createElement("div");
   toDoProjectIDContent.setAttribute("id", "todo-projectID-content");
   toDoProjectIDContent.setAttribute("data-todo-id", toDo["id"]);
@@ -308,6 +326,7 @@ const defaultView = function () {
 export {
   populateProjects,
   populateProjectDropDown,
+  populateProjectDropDownEdit,
   populateToDoListContainerHeader,
   populateToDoListContainer,
   populateToDoItemDetails,

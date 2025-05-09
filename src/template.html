@@ -150,6 +150,7 @@
     <div id="main-details">
       <div id="todo-details-container"></div>
       <!-- Form for editing the title of a To Do -->
+       <div id="active-todo-reference" hidden></div>
       <form id="edit-todo-title-form" hidden>
         <div id="edit-todo-title-header">Edit To Do Title</div>
         <div>
@@ -288,6 +289,25 @@
         </div>
         <div>
           <button id="edit-todo-notes-submit-button" type="button">
+            Submit
+          </button>
+        </div>
+        <div>
+          <button class="edit-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </form>
+      <!-- Form for editing the Project of a To Do -->
+      <form id="edit-todo-project-form" hidden>
+        <div id="edit-todo-project-header">Edit To Do Description</div>
+        <div id="edit-todo-project-dropdown-div">
+          <label for="edit-todo-project-dropdown">Project</label>
+          <select
+            name="edit-todo-project-dropdown"
+            id="edit-todo-project-dropdown"
+          ></select>
+        </div>
+        <div>
+          <button id="edit-todo-project-submit-button" type="button">
             Submit
           </button>
         </div>

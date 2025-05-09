@@ -17,6 +17,10 @@ class ToDo {
     this.checklist = checklist;
     this.projectID = projectID;
   }
+
+  setTitle(newTitle) {
+    this.title = newTitle;
+  }
 }
 
 export { ToDo };
