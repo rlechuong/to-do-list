@@ -108,6 +108,22 @@ const addNewToDoButtonEvents = function () {
   const newToDoButton = document.querySelector("#new-todo-button");
 
   newToDoButton.addEventListener("click", () => {
+    const projectDropDown = document.querySelector(
+      "#new-todo-project-dropdown"
+    );
+
+    const activeProjectReference = document.querySelector(
+      "#active-project-reference"
+    );
+    const activeProjectID =
+      activeProjectReference.getAttribute("data-project-id");
+
+    for (let i = 0; i < projectDropDown.options.length; i++) {
+      if (projectDropDown.options[i].value === activeProjectID) {
+        projectDropDown.options[i].selected = true;
+        break;
+      }
+    }
     newToDoDialog.showModal();
   });
 };
@@ -264,7 +280,7 @@ const editToDoTitleSubmitButton = function () {
   toTitleDoSubmitButton.addEventListener("click", () => {
     const newValue = document.querySelector("#edit-todo-title").value;
     getActiveToDo()["title"] = newValue;
-    saveToDosToStorage((toDos));
+    saveToDosToStorage(toDos);
     editToDoTitleForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
     populateToDoListContainer(getActiveToDo()["projectID"]);
@@ -522,6 +538,8 @@ const editToDoCancelButtons = function () {
       editToDoPriorityForm.hidden = true;
       editToDoNotesForm.hidden = true;
       editToDoProjectForm.hidden = true;
+      mainDisplay.setAttribute("style", "pointer-events: auto");
+      mainNav.setAttribute("style", "pointer-events: auto");
       editFormButtons();
     });
   });

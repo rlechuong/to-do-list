@@ -54,6 +54,12 @@ const populateToDoListContainerHeader = function (id) {
     "#todo-list-container-header"
   );
 
+  const activeProjectReference = document.querySelector(
+    "#active-project-reference"
+  );
+
+  activeProjectReference.setAttribute("data-project-id", id);
+
   toDoListContainerHeader.textContent = "";
 
   const toDoListContainerProjectTitle = document.createElement("div");
