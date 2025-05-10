@@ -71,6 +71,13 @@ const populateToDoListContainerHeader = function (id) {
   toDoListContainerProjectTitle.textContent = `${projectTitle}`;
   toDoListContainerHeader.appendChild(toDoListContainerProjectTitle);
 
+  const editProjectTitleButton = document.createElement("button");
+  editProjectTitleButton.setAttribute("data-project-id", id);
+  editProjectTitleButton.setAttribute("class", "edit-project-title-button");
+  editProjectTitleButton.setAttribute("type", "button");
+  editProjectTitleButton.textContent = "Edit Project Name";
+  toDoListContainerHeader.appendChild(editProjectTitleButton);
+
   const deleteProjectButton = document.createElement("button");
   deleteProjectButton.setAttribute("data-project-id", id);
   deleteProjectButton.setAttribute("class", "delete-project-button");
@@ -136,8 +143,7 @@ const populateToDoListContainer = function (id) {
     console.log(priorityColor);
     priorityColorBar.setAttribute(
       "style",
-      // `background-color: ${priorityColor}`
-      "background-image: linear-gradient(to right, red, white 20%);"
+      `background-image: linear-gradient(to right, ${priorityColor}, white 20%);`
     );
     toDoListItem.appendChild(priorityColorBar);
 
@@ -324,7 +330,6 @@ const populateToDoItemDetails = function (id) {
 
 const defaultView = function () {
   const defaultProjectID = getProjects()[0]["id"];
-  console.log(defaultProjectID);
   populateToDoListContainerHeader(defaultProjectID);
   populateToDoListContainer(defaultProjectID);
 };

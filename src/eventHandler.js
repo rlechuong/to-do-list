@@ -7,6 +7,7 @@ import {
   createToDo,
   deleteProject,
   deleteToDo,
+  saveProjectsToStorage,
 } from "./storage.js";
 import {
   populateProjects,
@@ -17,7 +18,7 @@ import {
   populateToDoItemDetails,
   defaultView,
 } from "./displayController.js";
-import { getToDoByID } from "./filters.js";
+import { getToDoByID, getProjectByID } from "./filters.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 const newProjectDialog = document.querySelector("#new-project-dialog");
@@ -27,6 +28,7 @@ const mainDisplay = document.querySelector("#main-display");
 const mainNav = document.querySelector("#main-nav");
 
 let toDos = getToDos();
+let projects = getProjects();
 
 const addAllEvents = function () {
   addNewToDoButtonEvents();
@@ -38,6 +40,7 @@ const addAllEvents = function () {
   addNewProjectButtonEvents();
   addNewProjectDialogSubmitButtonEvents();
   addDeleteProjectButtonEvents();
+  editProjectTitleButton();
 };
 
 const getActiveToDo = function () {
@@ -148,6 +151,8 @@ const addProjectButtonEvents = function () {
       populateToDoListContainerHeader(id);
       addDeleteProjectButtonEvents();
       addToDoButtonEvents();
+      editProjectTitleButton();
+      toDoDetailsContainer.textContent = "";
     });
   });
 };
@@ -221,7 +226,6 @@ const addDeleteProjectButtonEvents = function () {
 
   const projectToDeleteID =
     projectToDeleteButton.getAttribute("data-project-id");
-  console.log(projectToDeleteID);
 
   projectToDeleteButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this Project?")) {
@@ -233,6 +237,82 @@ const addDeleteProjectButtonEvents = function () {
       defaultView();
       addDeleteProjectButtonEvents();
       addToDoButtonEvents();
+    }
+  });
+};
+
+const editProjectTitleButton = function () {
+  const editProjectTitleButton = document.querySelector(
+    ".edit-project-title-button"
+  );
+
+  const editProjectTitleDialog = document.querySelector(
+    "#edit-project-title-dialog"
+  );
+
+  editProjectTitleButton.addEventListener("click", () => {
+    editProjectTitleDialog.showModal();
+    editProjectTitleDialogSubmitButtonEvents();
+    editProjectTitleDialogCloseButton();
+  });
+};
+
+const editProjectTitleDialogCloseButton = function () {
+  const editProjectTitleDialogCloseButton = document.querySelector(
+    "#edit-project-title-dialog-close-button"
+  );
+
+  const editProjectTitleDialog = document.querySelector(
+    "#edit-project-title-dialog"
+  );
+
+  editProjectTitleDialogCloseButton.addEventListener("click", () => {
+    editProjectTitleDialog.close();
+  });
+};
+
+const editProjectTitleDialogSubmitButtonEvents = function () {
+  const editProjectTitleButton = document.querySelector(
+    ".edit-project-title-button"
+  );
+  const editProjectTitleDialogSubmitButton = document.querySelector(
+    "#edit-project-title-dialog-submit-button"
+  );
+  const editProjectTitleDialog = document.querySelector(
+    "#edit-project-title-dialog"
+  );
+
+  editProjectTitleDialogSubmitButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const newProjectTitle = document.querySelector("#edit-project-title").value;
+    const projectToEditID =
+      editProjectTitleButton.getAttribute("data-project-id");
+    const editProjectTitleForm = document.querySelector(
+      "#edit-project-title-form"
+    );
+    let projectToEdit;
+
+    if (editProjectTitleForm.reportValidity()) {
+      projects.forEach(function (project) {
+        if (project["id"] === projectToEditID) {
+          projectToEdit = project;
+        }
+      });
+
+      projectToEdit["name"] = newProjectTitle;
+
+      saveProjectsToStorage(projects);
+      populateProjects(projects),
+        populateProjectDropDown(projects),
+        populateProjectDropDownEdit(projects),
+        populateToDoListContainerHeader(projectToEditID),
+        populateToDoListContainer(projectToEditID),
+        addAllEvents();
+      editProjectTitleDialog.close();
+
+      console.log(projects);
+    } else {
     }
   });
 };
@@ -331,6 +411,8 @@ const editToDoDescriptionSubmitButton = function () {
     populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    mainDisplay.setAttribute("style", "pointer-events: auto");
+    mainNav.setAttribute("style", "pointer-events: auto");
   });
 };
 
@@ -373,6 +455,8 @@ const editToDoDueDateSubmitButton = function () {
     populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    mainDisplay.setAttribute("style", "pointer-events: auto");
+    mainNav.setAttribute("style", "pointer-events: auto");
   });
 };
 
@@ -422,6 +506,8 @@ const editToDoPrioritySubmitButton = function () {
     populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    mainDisplay.setAttribute("style", "pointer-events: auto");
+    mainNav.setAttribute("style", "pointer-events: auto");
   });
 };
 
@@ -457,6 +543,8 @@ const editToDoNotesSubmitButton = function () {
     populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    mainDisplay.setAttribute("style", "pointer-events: auto");
+    mainNav.setAttribute("style", "pointer-events: auto");
   });
 };
 
@@ -507,6 +595,8 @@ const editToDoProjectSubmitButton = function () {
     populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    mainDisplay.setAttribute("style", "pointer-events: auto");
+    mainNav.setAttribute("style", "pointer-events: auto");
   });
 };
 
