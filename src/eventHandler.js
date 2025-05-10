@@ -3,7 +3,6 @@ import {
   getToDos,
   saveToDosToStorage,
   createProject,
-  createDefaultProject,
   createToDo,
   deleteProject,
   deleteToDo,
@@ -22,7 +21,6 @@ import { getToDoByID, getProjectByID } from "./filters.js";
 
 const newToDoDialog = document.querySelector("#new-todo-dialog");
 const newProjectDialog = document.querySelector("#new-project-dialog");
-const toDoListContainer = document.querySelector("#todo-list-container");
 const toDoDetailsContainer = document.querySelector("#todo-details-container");
 const mainDisplay = document.querySelector("#main-display");
 const mainNav = document.querySelector("#main-nav");
@@ -41,6 +39,7 @@ const addAllEvents = function () {
   addNewProjectDialogSubmitButtonEvents();
   addDeleteProjectButtonEvents();
   editProjectTitleButton();
+  editProjectTitleDialogSubmitButtonEvents();
 };
 
 const getActiveToDo = function () {
@@ -251,8 +250,12 @@ const editProjectTitleButton = function () {
   );
 
   editProjectTitleButton.addEventListener("click", () => {
+    const projectToEditID =
+      editProjectTitleButton.getAttribute("data-project-id");
+    const editProjectTitleInput = document.querySelector("#edit-project-title");
+    editProjectTitleInput.value = getProjectByID(projectToEditID)["name"];
+
     editProjectTitleDialog.showModal();
-    editProjectTitleDialogSubmitButtonEvents();
     editProjectTitleDialogCloseButton();
   });
 };
@@ -272,26 +275,30 @@ const editProjectTitleDialogCloseButton = function () {
 };
 
 const editProjectTitleDialogSubmitButtonEvents = function () {
-  const editProjectTitleButton = document.querySelector(
-    ".edit-project-title-button"
-  );
   const editProjectTitleDialogSubmitButton = document.querySelector(
     "#edit-project-title-dialog-submit-button"
   );
   const editProjectTitleDialog = document.querySelector(
     "#edit-project-title-dialog"
   );
+  const activeProjectReference = document.querySelector(
+    "#active-project-reference"
+  );
 
   editProjectTitleDialogSubmitButton.addEventListener("click", (event) => {
     event.preventDefault();
-
-    const newProjectTitle = document.querySelector("#edit-project-title").value;
-    const projectToEditID =
-      editProjectTitleButton.getAttribute("data-project-id");
     const editProjectTitleForm = document.querySelector(
       "#edit-project-title-form"
     );
+
+    const projectToEditID =
+      activeProjectReference.getAttribute("data-project-id");
+
+    const newProjectTitle = document.querySelector("#edit-project-title").value;
+
     let projectToEdit;
+
+    projects = getProjects();
 
     if (editProjectTitleForm.reportValidity()) {
       projects.forEach(function (project) {
@@ -301,17 +308,16 @@ const editProjectTitleDialogSubmitButtonEvents = function () {
       });
 
       projectToEdit["name"] = newProjectTitle;
-
-      saveProjectsToStorage(projects);
-      populateProjects(projects),
-        populateProjectDropDown(projects),
-        populateProjectDropDownEdit(projects),
-        populateToDoListContainerHeader(projectToEditID),
-        populateToDoListContainer(projectToEditID),
-        addAllEvents();
-      editProjectTitleDialog.close();
-
       console.log(projects);
+      saveProjectsToStorage(projects);
+      console.log(projects);
+      populateProjects(projects);
+      populateToDoListContainerHeader(projectToEdit["id"]);
+      addProjectButtonEvents();
+      addDeleteProjectButtonEvents();
+      addToDoButtonEvents();
+      editProjectTitleButton();
+      editProjectTitleDialog.close();
     } else {
     }
   });
