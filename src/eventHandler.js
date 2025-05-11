@@ -208,6 +208,8 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       );
 
       toDos = getToDos();
+      populateProjects(getProjects());
+      addProjectButtonEvents();
       populateToDoListContainer(newToDoProjectID);
       populateToDoListContainerHeader(newToDoProjectID);
       addToDoButtonEvents();

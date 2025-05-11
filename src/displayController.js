@@ -3,6 +3,7 @@ import {
   getMatchingProjectsToDos,
   getProjectByID,
   getToDoByID,
+  getMatchingProjectToDosAmount,
 } from "./filters.js";
 import { getProjects } from "./storage.js";
 import { differenceInDays } from "date-fns";
@@ -18,7 +19,8 @@ const populateProjects = function (projectsArray) {
 
   for (const project of projectsArray) {
     const projectElement = document.createElement("button");
-    projectElement.textContent = project["name"];
+    console.log(getMatchingProjectToDosAmount(project["id"]))
+    projectElement.textContent = `${project["name"]} ${getMatchingProjectToDosAmount(project["id"])}`;
     projectElement.setAttribute("data-project-id", project["id"]);
     projectElement.setAttribute("class", "project-button");
     mainNavProjectsContainer.appendChild(projectElement);

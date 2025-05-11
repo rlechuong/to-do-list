@@ -15,6 +15,10 @@ const getMatchingProjectsToDos = function (id) {
   return matchingToDos;
 };
 
+const getMatchingProjectToDosAmount = function (id) {
+  return getMatchingProjectsToDos(id).length;
+};
+
 const getProjectByID = function (id) {
   const projects = getProjects();
 
@@ -33,4 +37,9 @@ const getToDoByID = function (id) {
   return matchingToDo;
 };
 
-export { getMatchingProjectsToDos, getProjectByID, getToDoByID };
+export {
+  getMatchingProjectsToDos,
+  getProjectByID,
+  getToDoByID,
+  getMatchingProjectToDosAmount,
+};
