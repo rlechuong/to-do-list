@@ -9,6 +9,7 @@ class ToDo {
     projectID
   ) {
     this.id = crypto.randomUUID();
+    this.completed = false;
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;

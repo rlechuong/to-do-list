@@ -63,15 +63,14 @@ const populateProjectDropDownEdit = function (projectsArray) {
 };
 
 const populateToDoListContainerHeader = function (id) {
-  const toDoListContainerHeader = document.querySelector(
-    "#todo-list-container-header"
-  );
-
   const activeProjectReference = document.querySelector(
     "#active-project-reference"
   );
-
   activeProjectReference.setAttribute("data-project-id", id);
+
+  const toDoListContainerHeader = document.querySelector(
+    "#todo-list-container-header"
+  );
 
   toDoListContainerHeader.textContent = "";
 
@@ -81,22 +80,30 @@ const populateToDoListContainerHeader = function (id) {
     "todo-list-container-project-title"
   );
   const projectTitle = getProjectByID(id)["name"];
-  toDoListContainerProjectTitle.textContent = `${projectTitle}`;
+  toDoListContainerProjectTitle.textContent = `${projectTitle} To Dos`;
   toDoListContainerHeader.appendChild(toDoListContainerProjectTitle);
+
+  const toDoListContainerHeaderButtons = document.createElement("div");
+  toDoListContainerHeaderButtons.setAttribute(
+    "id",
+    "todo-list-container-header-buttons"
+  );
 
   const editProjectTitleButton = document.createElement("button");
   editProjectTitleButton.setAttribute("data-project-id", id);
   editProjectTitleButton.setAttribute("class", "edit-project-title-button");
   editProjectTitleButton.setAttribute("type", "button");
   editProjectTitleButton.textContent = "Edit Project Name";
-  toDoListContainerHeader.appendChild(editProjectTitleButton);
+  toDoListContainerHeaderButtons.appendChild(editProjectTitleButton);
 
   const deleteProjectButton = document.createElement("button");
   deleteProjectButton.setAttribute("data-project-id", id);
   deleteProjectButton.setAttribute("class", "delete-project-button");
   deleteProjectButton.setAttribute("type", "button");
   deleteProjectButton.textContent = "Delete This Project";
-  toDoListContainerHeader.appendChild(deleteProjectButton);
+  toDoListContainerHeaderButtons.appendChild(deleteProjectButton);
+
+  toDoListContainerHeader.appendChild(toDoListContainerHeaderButtons);
 };
 
 const populateToDoListContainer = function (id) {
@@ -105,12 +112,33 @@ const populateToDoListContainer = function (id) {
   let toDoList = getMatchingProjectsToDos(id);
 
   for (const toDo of toDoList) {
-    const toDoListItem = document.createElement("button");
+    const toDoListItem = document.createElement("div");
     toDoListItem.setAttribute("data-todo-id", toDo["id"]);
     toDoListItem.setAttribute("class", "todo-button");
 
+    let opacity = "";
+
+    const toDoListItemCheckBoxContainer = document.createElement("div");
+    const toDoListItemCheckBox = document.createElement("input");
+    toDoListItemCheckBox.setAttribute("type", "checkbox");
+    toDoListItemCheckBox.setAttribute("class", "completion-status");
+    toDoListItemCheckBox.setAttribute("name", "completion-status");
+    toDoListItemCheckBox.setAttribute("data-todo-id", toDo["id"]);
+    toDoListItemCheckBoxContainer.appendChild(toDoListItemCheckBox);
+    toDoListItem.appendChild(toDoListItemCheckBoxContainer);
+
+    
+    if (toDo["completed"] === true) {
+      opacity = "0.25";
+      toDoListItemCheckBox.checked=true;
+    } else {
+      opacity = "1";
+      toDoListItemCheckBox.checked=false;
+    }
+
     const toDoListItemTitle = document.createElement("div");
-    toDoListItemTitle.textContent = `Title: ${toDo["title"]}`;
+    toDoListItemTitle.setAttribute("class", "todo-list-item-title");
+    toDoListItemTitle.textContent = `${toDo["title"]}`;
     toDoListItem.appendChild(toDoListItemTitle);
 
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -118,25 +146,28 @@ const populateToDoListContainer = function (id) {
 
     if (toDo["dueDate"]) {
       const toDoListItemDueDate = document.createElement("div");
-      toDoListItemDueDate.textContent = `Due Date: ${toDo["dueDate"]}`;
+      toDoListItemDueDate.setAttribute("class", "todo-list-item-due-date");
+      toDoListItemDueDate.textContent = `Due: ${toDo["dueDate"]}`;
       toDoListItem.appendChild(toDoListItemDueDate);
 
       const toDoListDaysDue = document.createElement("div");
+      toDoListDaysDue.setAttribute("class", "todo-list-item-days-due");
       if (daysDue > 0) {
-        toDoListDaysDue.textContent = `Due In ${daysDue} days.`;
+        toDoListDaysDue.textContent = `In ${daysDue} Days`;
       } else if (daysDue < 0) {
-        toDoListDaysDue.textContent = `Due ${daysDue * -1} days ago.`;
+        toDoListDaysDue.textContent = `${daysDue * -1} Days Ago`;
       } else if (daysDue === 0) {
-        toDoListDaysDue.textContent = `Due Today.`;
+        toDoListDaysDue.textContent = `Today`;
       }
       toDoListItem.appendChild(toDoListDaysDue);
     }
 
-    const toDoListPriority = document.createElement("div");
-    toDoListPriority.textContent = `Priority: ${toDo["priority"]}`;
-    toDoListItem.appendChild(toDoListPriority);
+    // const toDoListPriority = document.createElement("div");
+    // toDoListPriority.textContent = `Priority: ${toDo["priority"]}`;
+    // toDoListItem.appendChild(toDoListPriority);
 
     const priorityToColor = toDo["priority"];
+
     let priorityColor;
 
     if (priorityToColor === "Very High") {
@@ -144,21 +175,20 @@ const populateToDoListContainer = function (id) {
     } else if (priorityToColor === "High") {
       priorityColor = "rgba(255, 165, 0, 1)";
     } else if (priorityToColor === "Medium") {
-      priorityColor = "rgba(255, 255, 0, 1)";
+      priorityColor = "rgba(255, 255, 0, 0.75)";
     } else if (priorityToColor === "Low") {
-      priorityColor = "rgba(0, 255, 0, 1)";
+      priorityColor = "rgba(0, 255, 0, 0.75)";
     } else if (priorityToColor === "Very Low") {
       priorityColor = "rgba(0, 165, 255, 1)";
     }
 
-    const priorityColorBar = document.createElement("div");
-    priorityColorBar.textContent = "test";
-    console.log(priorityColor);
-    priorityColorBar.setAttribute(
+    // const priorityColorBar = document.createElement("div");
+    // priorityColorBar.textContent = "test";
+    toDoListItem.setAttribute(
       "style",
-      `background-image: linear-gradient(to right, ${priorityColor}, white 20%);`
+      `background-image: linear-gradient(to right, ${priorityColor}, rgb(30,30,30) 3rem); opacity: ${opacity}`
     );
-    toDoListItem.appendChild(priorityColorBar);
+    // toDoListItem.appendChild(priorityColorBar);
 
     toDoListContainer.appendChild(toDoListItem);
   }

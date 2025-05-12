@@ -97,6 +97,21 @@ const deleteToDo = function (id) {
   saveToDosToStorage(toDos);
 };
 
+const changeToDoCompletion = function (id) {
+  const toDoCompletionToChange = toDos.filter(function (todo) {
+    return todo["id"] === id;
+  });
+
+  console.log(toDoCompletionToChange[0]["completed"]);
+
+  if (toDoCompletionToChange[0]["completed"] === false) {
+    toDoCompletionToChange[0]["completed"] = true;
+  } else {
+    toDoCompletionToChange[0]["completed"] = false;
+  }
+  saveToDosToStorage(toDos);
+};
+
 export {
   saveProjectsToStorage,
   saveToDosToStorage,
@@ -107,4 +122,5 @@ export {
   createToDo,
   deleteProject,
   deleteToDo,
+  changeToDoCompletion,
 };
