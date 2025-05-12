@@ -18,12 +18,23 @@ const populateProjects = function (projectsArray) {
   mainNavProjectsContainer.textContent = "";
 
   for (const project of projectsArray) {
-    const projectElement = document.createElement("button");
-    console.log(getMatchingProjectToDosAmount(project["id"]))
-    projectElement.textContent = `${project["name"]} ${getMatchingProjectToDosAmount(project["id"])}`;
-    projectElement.setAttribute("data-project-id", project["id"]);
-    projectElement.setAttribute("class", "project-button");
-    mainNavProjectsContainer.appendChild(projectElement);
+    const projectContainer = document.createElement("div");
+    projectContainer.setAttribute("class", "project-container");
+    projectContainer.setAttribute("data-project-id", project["id"]);
+    const projectTitle = document.createElement("div");
+    projectTitle.textContent = `${project["name"]}`;
+    projectTitle.setAttribute("data-project-id", project["id"]);
+    projectTitle.setAttribute("class", "project-container-title");
+    projectContainer.appendChild(projectTitle);
+    const projectToDos = document.createElement("div");
+    projectToDos.textContent = `${getMatchingProjectToDosAmount(
+      project["id"]
+    )}`;
+    projectToDos.setAttribute("data-project-id", project["id"]);
+    projectToDos.setAttribute("class", "project-container-todos");
+    projectContainer.appendChild(projectToDos);
+
+    mainNavProjectsContainer.appendChild(projectContainer);
   }
 };
 

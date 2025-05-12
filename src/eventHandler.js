@@ -141,7 +141,7 @@ const addNewToDoDialogCloseButtonEvents = function () {
 };
 
 const addProjectButtonEvents = function () {
-  const projectButtonList = document.querySelectorAll(".project-button");
+  const projectButtonList = document.querySelectorAll(".project-container");
 
   projectButtonList.forEach(function (button) {
     button.addEventListener("click", () => {
@@ -152,8 +152,37 @@ const addProjectButtonEvents = function () {
       addToDoButtonEvents();
       editProjectTitleButton();
       toDoDetailsContainer.textContent = "";
+
+      const projectTitleList = document.querySelectorAll(".project-container-title") 
+
+      projectTitleList.forEach(function (projectTitle) {
+        if (projectTitle.getAttribute("data-project-id") === id) {
+          projectTitle.setAttribute("style", "color: rgba(255, 0, 0, 0.87)");
+        }
+        else {
+          projectTitle.setAttribute("style", "color: rgba(255, 255, 255, 0.87)");
+        }
+      })
+
+      const projectContainerList = document.querySelectorAll(".project-container") 
+
+      projectContainerList.forEach(function (projectContainer) {
+        if (projectContainer.getAttribute("data-project-id") === id) {
+          projectContainer.setAttribute("style", "border: 1px solid rgba(255, 0, 0, 0.87)");
+        }
+        else {
+          projectContainer.setAttribute("style", "border: 1px solid rgba(255, 255, 255, 0.6)");
+        }
+      })
     });
   });
+
+  // const activeProjectID = document
+  //   .querySelector("#active-project-reference")
+  //   .getAttribute("data-project-id");
+  // console.log(activeProjectID);
+
+  // activeProjectTitle.setAttribute("style", "color: red;");
 };
 
 const addToDoButtonEvents = function () {
