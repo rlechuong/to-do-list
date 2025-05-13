@@ -178,7 +178,7 @@ const colorActiveProject = function (id) {
 
   projectTitleList.forEach(function (projectTitle) {
     if (projectTitle.getAttribute("data-project-id") === id) {
-      projectTitle.setAttribute("style", "color: rgba(255, 0, 0, 0.87)");
+      projectTitle.setAttribute("style", "color: #BB86FC");
     } else {
       projectTitle.setAttribute("style", "color: rgba(255, 255, 255, 0.87)");
     }
@@ -188,10 +188,7 @@ const colorActiveProject = function (id) {
 
   projectContainerList.forEach(function (projectContainer) {
     if (projectContainer.getAttribute("data-project-id") === id) {
-      projectContainer.setAttribute(
-        "style",
-        "border: 1px solid rgba(255, 0, 0, 0.87)"
-      );
+      projectContainer.setAttribute("style", "border: 1px solid #BB86FC");
     } else {
       projectContainer.setAttribute(
         "style",
@@ -206,7 +203,7 @@ const colorActiveProject = function (id) {
 
   projectToDosList.forEach(function (projectToDos) {
     if (projectToDos.getAttribute("data-project-id") === id) {
-      projectToDos.setAttribute("style", "color: rgba(255, 0, 0, 0.87)");
+      projectToDos.setAttribute("style", "color: #BB86FC");
     } else {
       projectToDos.setAttribute("style", "color: rgba(255, 255, 255, 0.6)");
     }
@@ -422,6 +419,7 @@ const addDeleteToDoButtonEvents = function (id) {
       addToDoButtonEvents();
       addDeleteProjectButtonEvents(toDoToDeleteProjectID);
       changeCompletionStatusEvent();
+      addToDoButtonEvents();
     } else {
     }
   });
@@ -460,6 +458,7 @@ const editToDoTitleSubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -506,6 +505,7 @@ const editToDoDescriptionSubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -551,6 +551,7 @@ const editToDoDueDateSubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -603,6 +604,7 @@ const editToDoPrioritySubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -641,6 +643,7 @@ const editToDoNotesSubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -649,7 +652,7 @@ const editToDoNotesSubmitButton = function () {
 // Edit To Do Project
 const editToDoProjectButton = function () {
   const editToDoProjectButton = document.querySelector(
-    "#edit-todo-project-button"
+    "#edit-todo-projectID-button"
   );
 
   editToDoProjectButton.addEventListener("click", () => {
@@ -694,6 +697,9 @@ const editToDoProjectSubmitButton = function () {
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
     changeCompletionStatusEvent();
+    addToDoButtonEvents();
+    populateProjects(getProjects());
+    addProjectButtonEvents();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });

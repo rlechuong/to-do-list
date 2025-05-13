@@ -41,13 +41,10 @@
 
     <!-- Form to edit project name. -->
     <dialog id="edit-project-title-dialog">
-      <button id="edit-project-title-dialog-close-button" type="button">
-        X
-      </button>
       <form id="edit-project-title-form">
-        <h1>Edit Project Title</h1>
+        <div id="edit-project-title-form-title">Edit Project Title</div>
         <div>
-          <label for="edit-project-title">Title</label>
+          <label for="edit-project-title"></label>
           <input
             type="text"
             id="edit-project-title"
@@ -60,15 +57,18 @@
             Submit
           </button>
         </div>
+        <button id="edit-project-title-dialog-close-button" type="button">
+          Cancel
+        </button>
       </form>
     </dialog>
 
     <div id="main-display">
       <button id="new-todo-button" type="button">New To-Do</button>
-      <hr>
+      <hr class="main-display-hr" />
       <div id="active-project-reference" hidden></div>
       <div id="todo-list-container-header"></div>
-      <hr>
+      <hr class="main-display-hr" />
       <!-- Container that populates with list of To Dos -->
       <div id="todo-list-container"></div>
       <!-- Form to create new task.  -->

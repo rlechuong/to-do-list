@@ -134,7 +134,7 @@ const populateToDoListContainer = function (id) {
     toDoListItem.appendChild(toDoListItemCheckBoxContainer);
 
     if (toDo["completed"] === true) {
-      opacity = "0.25";
+      opacity = "0.5";
       toDoListItemCheckBox.checked = true;
     } else {
       opacity = "1";
@@ -205,21 +205,27 @@ const populateToDoItemDetails = function (id) {
 
   let toDo = getToDoByID(id);
 
-  const toDoIDContainer = document.createElement("div");
-  toDoIDContainer.setAttribute("id", "todo-id-container");
-  toDoIDContainer.setAttribute("data-todo-id", toDo["id"]);
-  const toDoIDHeader = document.createElement("div");
-  toDoIDHeader.setAttribute("id", "todo-id-header");
-  toDoIDHeader.setAttribute("data-todo-id", toDo["id"]);
-  toDoIDHeader.textContent = "ID";
-  toDoIDContainer.appendChild(toDoIDHeader);
-  const toDoIDContent = document.createElement("div");
-  toDoIDContent.setAttribute("id", "todo-id-content");
-  toDoIDContent.setAttribute("data-todo-id", toDo["id"]);
-  toDoIDContent.textContent = `${toDo["id"]}`;
-  toDoIDContainer.appendChild(toDoIDContent);
+  // const toDoIDContainer = document.createElement("div");
+  // toDoIDContainer.setAttribute("id", "todo-id-container");
+  // toDoIDContainer.setAttribute("data-todo-id", toDo["id"]);
+  // const toDoIDHeader = document.createElement("div");
+  // toDoIDHeader.setAttribute("id", "todo-id-header");
+  // toDoIDHeader.setAttribute("data-todo-id", toDo["id"]);
+  // toDoIDHeader.textContent = "ID";
+  // toDoIDContainer.appendChild(toDoIDHeader);
+  // const toDoIDContent = document.createElement("div");
+  // toDoIDContent.setAttribute("id", "todo-id-content");
+  // toDoIDContent.setAttribute("data-todo-id", toDo["id"]);
+  // toDoIDContent.textContent = `${toDo["id"]}`;
+  // toDoIDContainer.appendChild(toDoIDContent);
 
-  toDoDetailsContainer.appendChild(toDoIDContainer);
+  // toDoDetailsContainer.appendChild(toDoIDContainer);
+
+  const ToDoTitleHeaderContainer = document.createElement("div");
+  ToDoTitleHeaderContainer.setAttribute("id", "todo-title-header-container");
+
+  const hrTitle = document.createElement("hr");
+  hrTitle.setAttribute("class", "main-details-hr");
 
   const toDoTitleContainer = document.createElement("div");
   toDoTitleContainer.setAttribute("id", "todo-title-container");
@@ -228,20 +234,30 @@ const populateToDoItemDetails = function (id) {
   toDoTitleHeader.setAttribute("id", "todo-title-header");
   toDoTitleHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoTitleHeader.textContent = "Title";
-  toDoTitleContainer.appendChild(toDoTitleHeader);
-  const editToDoTitleButton = document.createElement("button");
+  ToDoTitleHeaderContainer.appendChild(toDoTitleHeader);
+  const editToDoTitleButton = document.createElement("div");
   editToDoTitleButton.setAttribute("id", "edit-todo-title-button");
   editToDoTitleButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoTitleButton.setAttribute("type", "button");
-  editToDoTitleButton.textContent = "Edit";
-  toDoTitleContainer.appendChild(editToDoTitleButton);
+  editToDoTitleButton.textContent = ">";
+  ToDoTitleHeaderContainer.appendChild(editToDoTitleButton);
+  toDoTitleContainer.appendChild(ToDoTitleHeaderContainer);
   const toDoTitleContent = document.createElement("div");
   toDoTitleContent.setAttribute("id", "todo-title-content");
   toDoTitleContent.setAttribute("data-todo-id", toDo["id"]);
   toDoTitleContent.textContent = `${toDo["title"]}`;
   toDoTitleContainer.appendChild(toDoTitleContent);
+  toDoTitleContainer.appendChild(hrTitle);
 
   toDoDetailsContainer.appendChild(toDoTitleContainer);
+
+  const ToDoDescriptionHeaderContainer = document.createElement("div");
+  ToDoDescriptionHeaderContainer.setAttribute(
+    "id",
+    "todo-description-header-container"
+  );
+
+  const hrDescription = document.createElement("hr");
+  hrDescription.setAttribute("class", "main-details-hr");
 
   const toDoDescriptionContainer = document.createElement("div");
   toDoDescriptionContainer.setAttribute("id", "todo-description-container");
@@ -250,20 +266,30 @@ const populateToDoItemDetails = function (id) {
   toDoDescriptionHeader.setAttribute("id", "todo-description-header");
   toDoDescriptionHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoDescriptionHeader.textContent = "Description";
-  toDoDescriptionContainer.appendChild(toDoDescriptionHeader);
-  const editToDoDescriptionButton = document.createElement("button");
+  ToDoDescriptionHeaderContainer.appendChild(toDoDescriptionHeader);
+  const editToDoDescriptionButton = document.createElement("div");
   editToDoDescriptionButton.setAttribute("id", "edit-todo-description-button");
   editToDoDescriptionButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoDescriptionButton.setAttribute("type", "button");
-  editToDoDescriptionButton.textContent = "Edit";
-  toDoDescriptionContainer.appendChild(editToDoDescriptionButton);
+  editToDoDescriptionButton.textContent = ">";
+  ToDoDescriptionHeaderContainer.appendChild(editToDoDescriptionButton);
+  toDoDescriptionContainer.appendChild(ToDoDescriptionHeaderContainer);
   const toDoDescriptionContent = document.createElement("div");
   toDoDescriptionContent.setAttribute("id", "todo-description-content");
   toDoDescriptionContent.setAttribute("data-todo-id", toDo["id"]);
   toDoDescriptionContent.textContent = `${toDo["description"]}`;
   toDoDescriptionContainer.appendChild(toDoDescriptionContent);
+  toDoDescriptionContainer.appendChild(hrDescription);
 
   toDoDetailsContainer.appendChild(toDoDescriptionContainer);
+
+  const ToDoDueDateHeaderContainer = document.createElement("div");
+  ToDoDueDateHeaderContainer.setAttribute(
+    "id",
+    "todo-due-date-header-container"
+  );
+
+  const hrDueDate = document.createElement("hr");
+  hrDueDate.setAttribute("class", "main-details-hr");
 
   const toDoDueDateContainer = document.createElement("div");
   toDoDueDateContainer.setAttribute("id", "todo-due-date-container");
@@ -272,20 +298,30 @@ const populateToDoItemDetails = function (id) {
   toDoDueDateHeader.setAttribute("id", "todo-due-date-header");
   toDoDueDateHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoDueDateHeader.textContent = "Due Date";
-  toDoDueDateContainer.appendChild(toDoDueDateHeader);
-  const editToDoDueDateButton = document.createElement("button");
+  ToDoDueDateHeaderContainer.appendChild(toDoDueDateHeader);
+  const editToDoDueDateButton = document.createElement("div");
   editToDoDueDateButton.setAttribute("id", "edit-todo-due-date-button");
   editToDoDueDateButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoDueDateButton.setAttribute("type", "button");
-  editToDoDueDateButton.textContent = "Edit";
-  toDoDueDateContainer.appendChild(editToDoDueDateButton);
+  editToDoDueDateButton.textContent = ">";
+  ToDoDueDateHeaderContainer.appendChild(editToDoDueDateButton);
+  toDoDueDateContainer.appendChild(ToDoDueDateHeaderContainer);
   const toDoDueDateContent = document.createElement("div");
   toDoDueDateContent.setAttribute("id", "todo-due-date-content");
   toDoDueDateContent.setAttribute("data-todo-id", toDo["id"]);
   toDoDueDateContent.textContent = `${toDo["dueDate"]}`;
   toDoDueDateContainer.appendChild(toDoDueDateContent);
+  toDoDueDateContainer.appendChild(hrDueDate);
 
   toDoDetailsContainer.appendChild(toDoDueDateContainer);
+
+  const ToDoPriorityHeaderContainer = document.createElement("div");
+  ToDoPriorityHeaderContainer.setAttribute(
+    "id",
+    "todo-priority-header-container"
+  );
+
+  const hrPriority = document.createElement("hr");
+  hrPriority.setAttribute("class", "main-details-hr");
 
   const toDoPriorityContainer = document.createElement("div");
   toDoPriorityContainer.setAttribute("id", "todo-priority-container");
@@ -294,20 +330,27 @@ const populateToDoItemDetails = function (id) {
   toDoPriorityHeader.setAttribute("id", "todo-priority-header");
   toDoPriorityHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoPriorityHeader.textContent = "Priority";
-  toDoPriorityContainer.appendChild(toDoPriorityHeader);
-  const editToDoPriorityButton = document.createElement("button");
+  ToDoPriorityHeaderContainer.appendChild(toDoPriorityHeader);
+  const editToDoPriorityButton = document.createElement("div");
   editToDoPriorityButton.setAttribute("id", "edit-todo-priority-button");
   editToDoPriorityButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoPriorityButton.setAttribute("type", "button");
-  editToDoPriorityButton.textContent = "Edit";
-  toDoPriorityContainer.appendChild(editToDoPriorityButton);
+  editToDoPriorityButton.textContent = ">";
+  ToDoPriorityHeaderContainer.appendChild(editToDoPriorityButton);
+  toDoPriorityContainer.appendChild(ToDoPriorityHeaderContainer);
   const toDoPriorityContent = document.createElement("div");
   toDoPriorityContent.setAttribute("id", "todo-priority-content");
   toDoPriorityContent.setAttribute("data-todo-id", toDo["id"]);
   toDoPriorityContent.textContent = `${toDo["priority"]}`;
   toDoPriorityContainer.appendChild(toDoPriorityContent);
+  toDoPriorityContainer.appendChild(hrPriority);
 
   toDoDetailsContainer.appendChild(toDoPriorityContainer);
+
+  const ToDoNotesHeaderContainer = document.createElement("div");
+  ToDoNotesHeaderContainer.setAttribute("id", "todo-notes-header-container");
+
+  const hrNotes = document.createElement("hr");
+  hrNotes.setAttribute("class", "main-details-hr");
 
   const toDoNotesContainer = document.createElement("div");
   toDoNotesContainer.setAttribute("id", "todo-notes-container");
@@ -316,18 +359,19 @@ const populateToDoItemDetails = function (id) {
   toDoNotesHeader.setAttribute("id", "todo-notes-header");
   toDoNotesHeader.setAttribute("data-todo-id", toDo["id"]);
   toDoNotesHeader.textContent = "Notes";
-  toDoNotesContainer.appendChild(toDoNotesHeader);
-  const editToDoNotesButton = document.createElement("button");
+  ToDoNotesHeaderContainer.appendChild(toDoNotesHeader);
+  const editToDoNotesButton = document.createElement("div");
   editToDoNotesButton.setAttribute("id", "edit-todo-notes-button");
   editToDoNotesButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoNotesButton.setAttribute("type", "button");
-  editToDoNotesButton.textContent = "Edit";
-  toDoNotesContainer.appendChild(editToDoNotesButton);
+  editToDoNotesButton.textContent = ">";
+  ToDoNotesHeaderContainer.appendChild(editToDoNotesButton);
+  toDoNotesContainer.appendChild(ToDoNotesHeaderContainer);
   const toDoNotesContent = document.createElement("div");
   toDoNotesContent.setAttribute("id", "todo-notes-content");
   toDoNotesContent.setAttribute("data-todo-id", toDo["id"]);
   toDoNotesContent.textContent = `${toDo["notes"]}`;
   toDoNotesContainer.appendChild(toDoNotesContent);
+  toDoNotesContainer.appendChild(hrNotes);
 
   toDoDetailsContainer.appendChild(toDoNotesContainer);
 
@@ -347,25 +391,37 @@ const populateToDoItemDetails = function (id) {
 
   // toDoDetailsContainer.appendChild(toDoChecklistContainer);
 
+  const ToDoProjectIDsHeaderContainer = document.createElement("div");
+  ToDoProjectIDsHeaderContainer.setAttribute(
+    "id",
+    "todo-projectID-header-container"
+  );
+
+  const hrProjectID = document.createElement("hr");
+  hrProjectID.setAttribute("class", "main-details-hr");
+
   const toDoProjectIDContainer = document.createElement("div");
   toDoProjectIDContainer.setAttribute("id", "todo-projectID-container");
   toDoProjectIDContainer.setAttribute("data-todo-id", toDo["id"]);
   const toDoProjectIDHeader = document.createElement("div");
   toDoProjectIDHeader.setAttribute("id", "todo-projectID-header");
   toDoProjectIDHeader.setAttribute("data-todo-id", toDo["id"]);
-  toDoProjectIDHeader.textContent = "Project ID";
-  toDoProjectIDContainer.appendChild(toDoProjectIDHeader);
-  const editToDoProjectButton = document.createElement("button");
-  editToDoProjectButton.setAttribute("id", "edit-todo-project-button");
+  toDoProjectIDHeader.textContent = "Project Name";
+  ToDoProjectIDsHeaderContainer.appendChild(toDoProjectIDHeader);
+  const editToDoProjectButton = document.createElement("div");
+  editToDoProjectButton.setAttribute("id", "edit-todo-projectID-button");
   editToDoProjectButton.setAttribute("data-todo-id", toDo["id"]);
-  editToDoProjectButton.setAttribute("type", "button");
-  editToDoProjectButton.textContent = "Edit";
-  toDoProjectIDContainer.appendChild(editToDoProjectButton);
+  editToDoProjectButton.textContent = ">";
+  ToDoProjectIDsHeaderContainer.appendChild(editToDoProjectButton);
+  toDoProjectIDContainer.appendChild(ToDoProjectIDsHeaderContainer);
   const toDoProjectIDContent = document.createElement("div");
   toDoProjectIDContent.setAttribute("id", "todo-projectID-content");
   toDoProjectIDContent.setAttribute("data-todo-id", toDo["id"]);
-  toDoProjectIDContent.textContent = `${toDo["projectID"]}`;
+  toDoProjectIDContent.textContent = `${
+    getProjectByID(toDo["projectID"])["name"]
+  }`;
   toDoProjectIDContainer.appendChild(toDoProjectIDContent);
+  toDoProjectIDContainer.appendChild(hrProjectID);
 
   toDoDetailsContainer.appendChild(toDoProjectIDContainer);
 
