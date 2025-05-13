@@ -186,16 +186,27 @@ body {
   background-color: rgb(30, 30, 30);
   border: 1px solid rgba(255, 255, 255, 0.6);
   display: grid;
-  grid-template-columns: 3rem 4fr minmax(8rem, 1fr) minmax(5rem, 1fr);
+  grid-template-columns: 4rem 4fr minmax(8rem, 1fr) minmax(5rem, 1fr);
   padding: 1rem;
+  align-items: center;
 }
 
 .todo-button:hover {
-  border: 1px solid red;;
+  border: 1px solid red;
+}
+
+.todo-button.active {
+  border: 2px solid #03dac6;
+}
+
+.todo-list-item-checkbox-container {
+  display: grid;
+  align-items: center;
 }
 
 .todo-list-item-title {
   color: rgba(255, 255, 255, 0.87);
+  font-weight: bold;
 }
 
 .todo-list-item-due-date {
@@ -219,4 +230,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.completion-status {
+  width: 1.5rem;
+  height: 1.5rem;
 }

@@ -19,6 +19,14 @@ const getMatchingProjectToDosAmount = function (id) {
   return getMatchingProjectsToDos(id).length;
 };
 
+const getMatchingProjectToDosAmountIncomplete = function (id) {
+  const incompleteToDos = getMatchingProjectsToDos(id).filter(function (todo) {
+    return todo["completed"] === false;
+  });
+
+  return incompleteToDos.length;
+};
+
 const getProjectByID = function (id) {
   const projects = getProjects();
 
@@ -42,4 +50,5 @@ export {
   getProjectByID,
   getToDoByID,
   getMatchingProjectToDosAmount,
+  getMatchingProjectToDosAmountIncomplete
 };

@@ -4,9 +4,11 @@ import {
   getProjectByID,
   getToDoByID,
   getMatchingProjectToDosAmount,
+  getMatchingProjectToDosAmountIncomplete,
 } from "./filters.js";
 import { getProjects } from "./storage.js";
 import { differenceInDays } from "date-fns";
+import { colorActiveProject } from "./eventHandler.js";
 
 const mainNavProjectsContainer = document.querySelector(
   "#main-nav-projects-container"
@@ -27,9 +29,9 @@ const populateProjects = function (projectsArray) {
     projectTitle.setAttribute("class", "project-container-title");
     projectContainer.appendChild(projectTitle);
     const projectToDos = document.createElement("div");
-    projectToDos.textContent = `${getMatchingProjectToDosAmount(
+    projectToDos.textContent = `${getMatchingProjectToDosAmountIncomplete(
       project["id"]
-    )}`;
+    )} / ${getMatchingProjectToDosAmount(project["id"])}`;
     projectToDos.setAttribute("data-project-id", project["id"]);
     projectToDos.setAttribute("class", "project-container-todos");
     projectContainer.appendChild(projectToDos);
@@ -119,6 +121,10 @@ const populateToDoListContainer = function (id) {
     let opacity = "";
 
     const toDoListItemCheckBoxContainer = document.createElement("div");
+    toDoListItemCheckBoxContainer.setAttribute(
+      "class",
+      "todo-list-item-checkbox-container"
+    );
     const toDoListItemCheckBox = document.createElement("input");
     toDoListItemCheckBox.setAttribute("type", "checkbox");
     toDoListItemCheckBox.setAttribute("class", "completion-status");
@@ -127,17 +133,17 @@ const populateToDoListContainer = function (id) {
     toDoListItemCheckBoxContainer.appendChild(toDoListItemCheckBox);
     toDoListItem.appendChild(toDoListItemCheckBoxContainer);
 
-    
     if (toDo["completed"] === true) {
       opacity = "0.25";
-      toDoListItemCheckBox.checked=true;
+      toDoListItemCheckBox.checked = true;
     } else {
       opacity = "1";
-      toDoListItemCheckBox.checked=false;
+      toDoListItemCheckBox.checked = false;
     }
 
     const toDoListItemTitle = document.createElement("div");
     toDoListItemTitle.setAttribute("class", "todo-list-item-title");
+    toDoListItemTitle.setAttribute("data-todo-id", toDo["id"]);
     toDoListItemTitle.textContent = `${toDo["title"]}`;
     toDoListItem.appendChild(toDoListItemTitle);
 
@@ -186,7 +192,7 @@ const populateToDoListContainer = function (id) {
     // priorityColorBar.textContent = "test";
     toDoListItem.setAttribute(
       "style",
-      `background-image: linear-gradient(to right, ${priorityColor}, rgb(30,30,30) 3rem); opacity: ${opacity}`
+      `background-image: linear-gradient(to right, ${priorityColor}, rgb(30,30,30) 4rem); opacity: ${opacity}`
     );
     // toDoListItem.appendChild(priorityColorBar);
 
@@ -375,6 +381,7 @@ const defaultView = function () {
   const defaultProjectID = getProjects()[0]["id"];
   populateToDoListContainerHeader(defaultProjectID);
   populateToDoListContainer(defaultProjectID);
+  colorActiveProject(defaultProjectID);
 };
 
 export {

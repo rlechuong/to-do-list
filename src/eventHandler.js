@@ -143,6 +143,34 @@ const addNewToDoDialogCloseButtonEvents = function () {
   });
 };
 
+const colorActiveToDo = function (id) {
+  const toDoButtonList = document.querySelectorAll(".todo-button");
+
+  toDoButtonList.forEach(function (toDoButton) {
+    if (toDoButton.getAttribute("data-todo-id") === id) {
+      toDoButton.classList.add("active");
+      // toDoButton.style.border = "1px solid #03DAC6";
+    } else {
+      toDoButton.classList.remove("active");
+    }
+  });
+
+  const toDoListItemTitleList = document.querySelectorAll(
+    ".todo-list-item-title"
+  );
+
+  toDoListItemTitleList.forEach(function (toDoListItemTitle) {
+    if (toDoListItemTitle.getAttribute("data-todo-id") === id) {
+      toDoListItemTitle.setAttribute("style", "color: #03DAC6");
+    } else {
+      toDoListItemTitle.setAttribute(
+        "style",
+        "color: color: rgba(255, 255, 255, 0.87)"
+      );
+    }
+  });
+};
+
 const colorActiveProject = function (id) {
   const projectTitleList = document.querySelectorAll(
     ".project-container-title"
@@ -215,6 +243,7 @@ const addToDoButtonEvents = function () {
       activeToDoReference.setAttribute("data-todo-id", id);
       populateToDoItemDetails(id);
       addDeleteToDoButtonEvents(id);
+      colorActiveToDo(id);
       editFormButtons();
     });
   });
@@ -713,15 +742,19 @@ const changeCompletionStatusEvent = function () {
   );
 
   const activeProjectID =
-  activeProjectReference.getAttribute("data-project-id");
+    activeProjectReference.getAttribute("data-project-id");
 
   toDoCheckBoxes.forEach(function (toDoCheckBox) {
     toDoCheckBox.addEventListener("click", function (event) {
       const toDoToChange = event.target.getAttribute("data-todo-id");
       changeToDoCompletion(toDoToChange);
+      populateProjects(getProjects());
+      addProjectButtonEvents();
+      addNewProjectButtonEvents();
       populateToDoListContainer(activeProjectID);
       changeCompletionStatusEvent();
       addToDoButtonEvents();
+      colorActiveProject(activeProjectID);
     });
   });
 };
@@ -748,4 +781,5 @@ export {
   addDeleteProjectButtonEvents,
   addDeleteToDoButtonEvents,
   editToDoTitleButton,
+  colorActiveProject,
 };
