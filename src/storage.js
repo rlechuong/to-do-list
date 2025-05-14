@@ -5,14 +5,6 @@ import { getMatchingProjectsToDos } from "./filters.js";
 let projects = [];
 let toDos = [];
 
-const saveProjectsToStorage = function (array) {
-  localStorage.setItem("projects", JSON.stringify(array));
-};
-
-const saveToDosToStorage = function (array) {
-  localStorage.setItem("toDos", JSON.stringify(array));
-};
-
 const getProjects = function () {
   if (localStorage.getItem("projects")) {
     projects = JSON.parse(localStorage.getItem("projects"));
@@ -35,6 +27,29 @@ const createDefaultProject = function () {
     saveProjectsToStorage(projects);
   } else {
   }
+};
+
+const deleteProject = function (id) {
+  const indexToDelete = projects.findIndex(function (element) {
+    return element["id"] === id;
+  });
+
+  if (indexToDelete === 0) {
+    alert("Cannot Delete First Project.");
+  } else {
+    const toDosToDelete = getMatchingProjectsToDos(id);
+
+    for (const todo of toDosToDelete) {
+      deleteToDo(todo["id"]);
+    }
+
+    projects.splice(indexToDelete, 1);
+    saveProjectsToStorage(projects);
+  }
+};
+
+const saveProjectsToStorage = function (array) {
+  localStorage.setItem("projects", JSON.stringify(array));
 };
 
 const getToDos = function () {
@@ -69,25 +84,6 @@ const createToDo = function (
   saveToDosToStorage(toDos);
 };
 
-const deleteProject = function (id) {
-  const indexToDelete = projects.findIndex(function (element) {
-    return element["id"] === id;
-  });
-
-  if (indexToDelete === 0) {
-    alert("Cannot Delete First Project.");
-  } else {
-    const toDosToDelete = getMatchingProjectsToDos(id);
-
-    for (const todo of toDosToDelete) {
-      deleteToDo(todo["id"]);
-    }
-
-    projects.splice(indexToDelete, 1);
-    saveProjectsToStorage(projects);
-  }
-};
-
 const deleteToDo = function (id) {
   const indexToDelete = toDos.findIndex(function (element) {
     return element["id"] === id;
@@ -97,12 +93,14 @@ const deleteToDo = function (id) {
   saveToDosToStorage(toDos);
 };
 
+const saveToDosToStorage = function (array) {
+  localStorage.setItem("toDos", JSON.stringify(array));
+};
+
 const changeToDoCompletion = function (id) {
   const toDoCompletionToChange = toDos.filter(function (todo) {
     return todo["id"] === id;
   });
-
-  console.log(toDoCompletionToChange[0]["completed"]);
 
   if (toDoCompletionToChange[0]["completed"] === false) {
     toDoCompletionToChange[0]["completed"] = true;
@@ -113,14 +111,14 @@ const changeToDoCompletion = function (id) {
 };
 
 export {
-  saveProjectsToStorage,
-  saveToDosToStorage,
   getProjects,
-  getToDos,
   createProject,
   createDefaultProject,
-  createToDo,
   deleteProject,
+  saveProjectsToStorage,
+  getToDos,
+  createToDo,
   deleteToDo,
+  saveToDosToStorage,
   changeToDoCompletion,
 };

@@ -29,19 +29,20 @@ const mainNav = document.querySelector("#main-nav");
 let toDos = getToDos();
 let projects = getProjects();
 
-const addAllEvents = function () {
-  changeCompletionStatusEvent();
-  addNewToDoButtonEvents();
-  addNewToDoDialogCloseButtonEvents();
-  addNewProjectDialogCloseButtonEvents();
-  addNewToDoDialogSubmitButtonEvents();
+const addDefaultEvents = function () {
   addProjectButtonEvents();
-  addToDoButtonEvents();
   addNewProjectButtonEvents();
   addNewProjectDialogSubmitButtonEvents();
-  addDeleteProjectButtonEvents();
+  addNewProjectDialogCloseButtonEvents();
+  addNewToDoButtonEvents();
+  addNewToDoDialogSubmitButtonEvents();
+  addNewToDoDialogCloseButtonEvents();
   editProjectTitleButton();
   editProjectTitleDialogSubmitButtonEvents();
+  editProjectTitleDialogCloseButton();
+  addDeleteProjectButtonEvents();
+  addToDoButtonEvents();
+  changeCompletionStatusEvent();
 };
 
 const getActiveToDo = function () {
@@ -89,6 +90,7 @@ const addNewProjectDialogSubmitButtonEvents = function () {
     if (newProjectForm.reportValidity()) {
       const newProjectTitle =
         document.querySelector("#new-project-title").value;
+      const newProjectTitleInput = document.querySelector("#new-project-title");
 
       createProject(newProjectTitle);
 
@@ -97,11 +99,14 @@ const addNewProjectDialogSubmitButtonEvents = function () {
       toDoDetailsContainer.textContent = "";
       populateProjects(getProjects());
       populateProjectDropDown(getProjects());
+      addProjectButtonEvents();
       populateToDoListContainerHeader(getProjects()[latestProjectIndex]["id"]);
       populateToDoListContainer(getProjects()[latestProjectIndex]["id"]);
+      editProjectTitleButton();
       addDeleteProjectButtonEvents();
-      addProjectButtonEvents();
       changeCompletionStatusEvent();
+      colorActiveProject(getProjects()[latestProjectIndex]["id"]);
+      newProjectTitleInput.value = "";
 
       newProjectDialog.close();
     } else {
@@ -143,73 +148,6 @@ const addNewToDoDialogCloseButtonEvents = function () {
   });
 };
 
-const colorActiveToDo = function (id) {
-  const toDoButtonList = document.querySelectorAll(".todo-button");
-
-  toDoButtonList.forEach(function (toDoButton) {
-    if (toDoButton.getAttribute("data-todo-id") === id) {
-      toDoButton.classList.add("active");
-      // toDoButton.style.border = "1px solid #03DAC6";
-    } else {
-      toDoButton.classList.remove("active");
-    }
-  });
-
-  const toDoListItemTitleList = document.querySelectorAll(
-    ".todo-list-item-title"
-  );
-
-  toDoListItemTitleList.forEach(function (toDoListItemTitle) {
-    if (toDoListItemTitle.getAttribute("data-todo-id") === id) {
-      toDoListItemTitle.setAttribute("style", "color: #03DAC6");
-    } else {
-      toDoListItemTitle.setAttribute(
-        "style",
-        "color: color: rgba(255, 255, 255, 0.87)"
-      );
-    }
-  });
-};
-
-const colorActiveProject = function (id) {
-  const projectTitleList = document.querySelectorAll(
-    ".project-container-title"
-  );
-
-  projectTitleList.forEach(function (projectTitle) {
-    if (projectTitle.getAttribute("data-project-id") === id) {
-      projectTitle.setAttribute("style", "color: #BB86FC");
-    } else {
-      projectTitle.setAttribute("style", "color: rgba(255, 255, 255, 0.87)");
-    }
-  });
-
-  const projectContainerList = document.querySelectorAll(".project-container");
-
-  projectContainerList.forEach(function (projectContainer) {
-    if (projectContainer.getAttribute("data-project-id") === id) {
-      projectContainer.setAttribute("style", "border: 1px solid #BB86FC");
-    } else {
-      projectContainer.setAttribute(
-        "style",
-        "border: 1px solid rgba(255, 255, 255, 0.6)"
-      );
-    }
-  });
-
-  const projectToDosList = document.querySelectorAll(
-    ".project-container-todos"
-  );
-
-  projectToDosList.forEach(function (projectToDos) {
-    if (projectToDos.getAttribute("data-project-id") === id) {
-      projectToDos.setAttribute("style", "color: #BB86FC");
-    } else {
-      projectToDos.setAttribute("style", "color: rgba(255, 255, 255, 0.6)");
-    }
-  });
-};
-
 const addProjectButtonEvents = function () {
   const projectButtonList = document.querySelectorAll(".project-container");
 
@@ -217,12 +155,13 @@ const addProjectButtonEvents = function () {
     button.addEventListener("click", () => {
       const id = button.getAttribute("data-project-id");
       colorActiveProject(id);
-      populateToDoListContainer(id);
       populateToDoListContainerHeader(id);
-      addDeleteProjectButtonEvents();
-      addToDoButtonEvents();
       editProjectTitleButton();
+      addDeleteProjectButtonEvents();
+      populateToDoListContainer(id);
+      addToDoButtonEvents();
       changeCompletionStatusEvent();
+
       toDoDetailsContainer.textContent = "";
     });
   });
@@ -239,9 +178,9 @@ const addToDoButtonEvents = function () {
       const id = button.getAttribute("data-todo-id");
       activeToDoReference.setAttribute("data-todo-id", id);
       populateToDoItemDetails(id);
+      editFormButtons();
       addDeleteToDoButtonEvents(id);
       colorActiveToDo(id);
-      editFormButtons();
     });
   });
 };
@@ -258,17 +197,24 @@ const addNewToDoDialogSubmitButtonEvents = function () {
 
     if (newToDoForm.reportValidity()) {
       const newToDoTitle = document.querySelector("#new-todo-title").value;
+      const newToDoTitleInput = document.querySelector("#new-todo-title");
       const newToDoDescription = document.querySelector(
         "#new-todo-description"
       ).value;
+      const newToDoDescriptionInput = document.querySelector(
+        "#new-todo-description"
+      );
       const newToDoDueDate = document.querySelector("#new-todo-due-date").value;
+      const newToDoDueDateInput = document.querySelector("#new-todo-due-date");
       const newToDoPriority = document.querySelector(
         `input[name="new-todo-priority"]:checked`
       ).value;
+      const newToDoPriorityInput = document.querySelector("#new-todo-medium");
       const newToDoProjectID = document.querySelector(
         "#new-todo-project-dropdown"
       ).value;
       const newToDoNotes = document.querySelector("#new-todo-notes").value;
+      const newToDoNotesInput = document.querySelector("#new-todo-notes");
 
       createToDo(
         newToDoTitle,
@@ -283,12 +229,20 @@ const addNewToDoDialogSubmitButtonEvents = function () {
       toDos = getToDos();
       populateProjects(getProjects());
       addProjectButtonEvents();
-      populateToDoListContainer(newToDoProjectID);
-      populateToDoListContainerHeader(newToDoProjectID);
       colorActiveProject(newToDoProjectID);
-      addToDoButtonEvents();
+      populateToDoListContainerHeader(newToDoProjectID);
+      editProjectTitleButton();
       addDeleteProjectButtonEvents();
+      populateToDoListContainer(newToDoProjectID);
+      addToDoButtonEvents();
       changeCompletionStatusEvent();
+
+      newToDoTitleInput.value = "";
+      newToDoDescriptionInput.value = "";
+      newToDoDueDateInput.value = "";
+      newToDoPriorityInput.checked = true;
+      newToDoNotesInput.value = "";
+
       newToDoDialog.close();
     } else {
     }
@@ -303,19 +257,15 @@ const addDeleteProjectButtonEvents = function () {
   const projectToDeleteID =
     projectToDeleteButton.getAttribute("data-project-id");
 
-  const defaultProjectID = getProjects()[0]["id"];
-
   projectToDeleteButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to delete this Project?")) {
       deleteProject(projectToDeleteID);
       toDoDetailsContainer.textContent = "";
-      populateProjects(getProjects());
-      populateProjectDropDown(getProjects());
-      addProjectButtonEvents();
       defaultView();
+      addProjectButtonEvents();
+      editProjectTitleButton();
       addDeleteProjectButtonEvents();
       addToDoButtonEvents();
-      colorActiveProject(defaultProjectID);
       changeCompletionStatusEvent();
     }
   });
@@ -337,7 +287,6 @@ const editProjectTitleButton = function () {
     editProjectTitleInput.value = getProjectByID(projectToEditID)["name"];
 
     editProjectTitleDialog.showModal();
-    editProjectTitleDialogCloseButton();
   });
 };
 
@@ -389,17 +338,13 @@ const editProjectTitleDialogSubmitButtonEvents = function () {
       });
 
       projectToEdit["name"] = newProjectTitle;
-      console.log(projects);
       saveProjectsToStorage(projects);
-      console.log(projects);
       populateProjects(projects);
-      populateToDoListContainerHeader(projectToEdit["id"]);
-      colorActiveProject(projectToEdit["id"]);
       addProjectButtonEvents();
-      addDeleteProjectButtonEvents();
-      addToDoButtonEvents();
+      colorActiveProject(projectToEdit["id"]);
+      populateToDoListContainerHeader(projectToEdit["id"]);
       editProjectTitleButton();
-      changeCompletionStatusEvent();
+      addDeleteProjectButtonEvents();
       editProjectTitleDialog.close();
     } else {
     }
@@ -414,12 +359,12 @@ const addDeleteToDoButtonEvents = function (id) {
     if (confirm("Are you sure you want to delete this To Do?")) {
       deleteToDo(id);
       toDoDetailsContainer.textContent = "";
+      populateProjects(getProjects());
+      addProjectButtonEvents();
+      colorActiveProject(toDoToDeleteProjectID);
       populateToDoListContainer(toDoToDeleteProjectID);
-      populateToDoListContainerHeader(toDoToDeleteProjectID);
       addToDoButtonEvents();
-      addDeleteProjectButtonEvents(toDoToDeleteProjectID);
       changeCompletionStatusEvent();
-      addToDoButtonEvents();
     } else {
     }
   });
@@ -454,11 +399,11 @@ const editToDoTitleSubmitButton = function () {
     saveToDosToStorage(toDos);
     editToDoTitleForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
+    populateToDoListContainer(getActiveToDo()["projectID"]);
     addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -501,11 +446,11 @@ const editToDoDescriptionSubmitButton = function () {
     saveToDosToStorage(toDos);
     editToDoDescriptionForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
+    populateToDoListContainer(getActiveToDo()["projectID"]);
     addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -542,16 +487,15 @@ const editToDoDueDateSubmitButton = function () {
   );
   toDoDueDateSubmitButton.addEventListener("click", () => {
     const newValue = document.querySelector("#edit-todo-due-date").value;
-    console.log(newValue);
     getActiveToDo()["dueDate"] = newValue;
     saveToDosToStorage(toDos);
     editToDoDueDateForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
+    populateToDoListContainer(getActiveToDo()["projectID"]);
     addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -600,11 +544,11 @@ const editToDoPrioritySubmitButton = function () {
     saveToDosToStorage(toDos);
     editToDoPriorityForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
+    populateToDoListContainer(getActiveToDo()["projectID"]);
     addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -639,11 +583,11 @@ const editToDoNotesSubmitButton = function () {
     saveToDosToStorage(toDos);
     editToDoNotesForm.hidden = true;
     populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
     editFormButtons();
     addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
+    populateToDoListContainer(getActiveToDo()["projectID"]);
     addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -691,15 +635,18 @@ const editToDoProjectSubmitButton = function () {
     getActiveToDo()["projectID"] = newValue;
     saveToDosToStorage(toDos);
     editToDoProjectForm.hidden = true;
-    populateToDoItemDetails(getActiveToDo()["id"]);
-    populateToDoListContainerHeader(getActiveToDo()["projectID"]);
-    populateToDoListContainer(getActiveToDo()["projectID"]);
-    editFormButtons();
-    addDeleteToDoButtonEvents(getActiveToDo()["id"]);
-    changeCompletionStatusEvent();
-    addToDoButtonEvents();
     populateProjects(getProjects());
     addProjectButtonEvents();
+    colorActiveProject(getActiveToDo()["projectID"]);
+    populateToDoListContainerHeader(getActiveToDo()["projectID"]);
+    editProjectTitleButton();
+    addDeleteProjectButtonEvents();
+    populateToDoItemDetails(getActiveToDo()["id"]);
+    editFormButtons();
+    addDeleteToDoButtonEvents(getActiveToDo()["id"]);
+    populateToDoListContainer(getActiveToDo()["projectID"]);
+    addToDoButtonEvents();
+    changeCompletionStatusEvent();
     mainDisplay.setAttribute("style", "pointer-events: auto");
     mainNav.setAttribute("style", "pointer-events: auto");
   });
@@ -719,12 +666,13 @@ const editToDoCancelButtons = function () {
   const editToDoNotesForm = document.querySelector("#edit-todo-notes-form");
   const editToDoProjectForm = document.querySelector("#edit-todo-project-form");
 
-  const ToDoCancelButtons = document.querySelectorAll(
+  const toDoCancelButtons = document.querySelectorAll(
     ".edit-todo-cancel-button"
   );
-  ToDoCancelButtons.forEach(function (button) {
+  toDoCancelButtons.forEach(function (button) {
     button.addEventListener("click", () => {
       populateToDoItemDetails(getActiveToDo()["id"]);
+      editFormButtons();
       addDeleteToDoButtonEvents(getActiveToDo()["id"]);
       editToDoDescriptionForm.hidden = true;
       editToDoTitleForm.hidden = true;
@@ -734,8 +682,73 @@ const editToDoCancelButtons = function () {
       editToDoProjectForm.hidden = true;
       mainDisplay.setAttribute("style", "pointer-events: auto");
       mainNav.setAttribute("style", "pointer-events: auto");
-      editFormButtons();
     });
+  });
+};
+
+const colorActiveProject = function (id) {
+  const projectTitleList = document.querySelectorAll(
+    ".project-container-title"
+  );
+
+  projectTitleList.forEach(function (projectTitle) {
+    if (projectTitle.getAttribute("data-project-id") === id) {
+      projectTitle.setAttribute("style", "color: #BB86FC");
+    } else {
+      projectTitle.setAttribute("style", "color: rgba(255, 255, 255, 0.87)");
+    }
+  });
+
+  const projectContainerList = document.querySelectorAll(".project-container");
+
+  projectContainerList.forEach(function (projectContainer) {
+    if (projectContainer.getAttribute("data-project-id") === id) {
+      projectContainer.setAttribute("style", "border: 1px solid #BB86FC");
+    } else {
+      projectContainer.setAttribute(
+        "style",
+        "border: 1px solid rgba(255, 255, 255, 0.6)"
+      );
+    }
+  });
+
+  const projectToDosList = document.querySelectorAll(
+    ".project-container-todos"
+  );
+
+  projectToDosList.forEach(function (projectToDos) {
+    if (projectToDos.getAttribute("data-project-id") === id) {
+      projectToDos.setAttribute("style", "color: #BB86FC");
+    } else {
+      projectToDos.setAttribute("style", "color: rgba(255, 255, 255, 0.6)");
+    }
+  });
+};
+
+const colorActiveToDo = function (id) {
+  const toDoButtonList = document.querySelectorAll(".todo-button");
+
+  toDoButtonList.forEach(function (toDoButton) {
+    if (toDoButton.getAttribute("data-todo-id") === id) {
+      toDoButton.classList.add("active");
+    } else {
+      toDoButton.classList.remove("active");
+    }
+  });
+
+  const toDoListItemTitleList = document.querySelectorAll(
+    ".todo-list-item-title"
+  );
+
+  toDoListItemTitleList.forEach(function (toDoListItemTitle) {
+    if (toDoListItemTitle.getAttribute("data-todo-id") === id) {
+      toDoListItemTitle.setAttribute("style", "color: #03DAC6");
+    } else {
+      toDoListItemTitle.setAttribute(
+        "style",
+        "color: color: rgba(255, 255, 255, 0.87)"
+      );
+    }
   });
 };
 
@@ -755,11 +768,10 @@ const changeCompletionStatusEvent = function () {
       changeToDoCompletion(toDoToChange);
       populateProjects(getProjects());
       addProjectButtonEvents();
-      addNewProjectButtonEvents();
-      populateToDoListContainer(activeProjectID);
-      changeCompletionStatusEvent();
-      addToDoButtonEvents();
       colorActiveProject(activeProjectID);
+      populateToDoListContainer(activeProjectID);
+      addToDoButtonEvents();
+      changeCompletionStatusEvent();
     });
   });
 };
@@ -773,18 +785,4 @@ const editFormButtons = function () {
   editToDoProjectButton();
 };
 
-export {
-  addAllEvents,
-  addNewProjectButtonEvents,
-  addNewProjectDialogCloseButtonEvents,
-  addNewProjectDialogSubmitButtonEvents,
-  addNewToDoButtonEvents,
-  addNewToDoDialogCloseButtonEvents,
-  addNewToDoDialogSubmitButtonEvents,
-  addProjectButtonEvents,
-  addToDoButtonEvents,
-  addDeleteProjectButtonEvents,
-  addDeleteToDoButtonEvents,
-  editToDoTitleButton,
-  colorActiveProject,
-};
+export { addDefaultEvents, colorActiveProject };

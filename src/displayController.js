@@ -168,10 +168,6 @@ const populateToDoListContainer = function (id) {
       toDoListItem.appendChild(toDoListDaysDue);
     }
 
-    // const toDoListPriority = document.createElement("div");
-    // toDoListPriority.textContent = `Priority: ${toDo["priority"]}`;
-    // toDoListItem.appendChild(toDoListPriority);
-
     const priorityToColor = toDo["priority"];
 
     let priorityColor;
@@ -188,13 +184,10 @@ const populateToDoListContainer = function (id) {
       priorityColor = "rgba(0, 165, 255, 1)";
     }
 
-    // const priorityColorBar = document.createElement("div");
-    // priorityColorBar.textContent = "test";
     toDoListItem.setAttribute(
       "style",
       `background-image: linear-gradient(to right, ${priorityColor}, rgb(30,30,30) 4rem); opacity: ${opacity}`
     );
-    // toDoListItem.appendChild(priorityColorBar);
 
     toDoListContainer.appendChild(toDoListItem);
   }
@@ -204,22 +197,6 @@ const populateToDoItemDetails = function (id) {
   toDoDetailsContainer.textContent = "";
 
   let toDo = getToDoByID(id);
-
-  // const toDoIDContainer = document.createElement("div");
-  // toDoIDContainer.setAttribute("id", "todo-id-container");
-  // toDoIDContainer.setAttribute("data-todo-id", toDo["id"]);
-  // const toDoIDHeader = document.createElement("div");
-  // toDoIDHeader.setAttribute("id", "todo-id-header");
-  // toDoIDHeader.setAttribute("data-todo-id", toDo["id"]);
-  // toDoIDHeader.textContent = "ID";
-  // toDoIDContainer.appendChild(toDoIDHeader);
-  // const toDoIDContent = document.createElement("div");
-  // toDoIDContent.setAttribute("id", "todo-id-content");
-  // toDoIDContent.setAttribute("data-todo-id", toDo["id"]);
-  // toDoIDContent.textContent = `${toDo["id"]}`;
-  // toDoIDContainer.appendChild(toDoIDContent);
-
-  // toDoDetailsContainer.appendChild(toDoIDContainer);
 
   const ToDoTitleHeaderContainer = document.createElement("div");
   ToDoTitleHeaderContainer.setAttribute("id", "todo-title-header-container");
@@ -375,22 +352,6 @@ const populateToDoItemDetails = function (id) {
 
   toDoDetailsContainer.appendChild(toDoNotesContainer);
 
-  // const toDoChecklistContainer = document.createElement("div");
-  // toDoChecklistContainer.setAttribute("id", "todo-checklist-container");
-  // toDoChecklistContainer.setAttribute("data-todo-id", toDo["id"]);
-  // const toDoChecklistHeader = document.createElement("div");
-  // toDoChecklistHeader.setAttribute("id", "todo-checklist-header");
-  // toDoChecklistHeader.setAttribute("data-todo-id", toDo["id"]);
-  // toDoChecklistHeader.textContent = "Checklist";
-  // toDoChecklistContainer.appendChild(toDoChecklistHeader);
-  // const toDoChecklistContent = document.createElement("div");
-  // toDoChecklistContent.setAttribute("id", "todo-checklist-content");
-  // toDoChecklistContent.setAttribute("data-todo-id", toDo["id"]);
-  // toDoChecklistContent.textContent = `${toDo["checklist"]}`;
-  // toDoChecklistContainer.appendChild(toDoChecklistContent);
-
-  // toDoDetailsContainer.appendChild(toDoChecklistContainer);
-
   const ToDoProjectIDsHeaderContainer = document.createElement("div");
   ToDoProjectIDsHeaderContainer.setAttribute(
     "id",
@@ -435,6 +396,8 @@ const populateToDoItemDetails = function (id) {
 
 const defaultView = function () {
   const defaultProjectID = getProjects()[0]["id"];
+  populateProjects(getProjects());
+  populateProjectDropDown(getProjects());
   populateToDoListContainerHeader(defaultProjectID);
   populateToDoListContainer(defaultProjectID);
   colorActiveProject(defaultProjectID);

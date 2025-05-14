@@ -1,10 +1,22 @@
-import {
-  getProjects,
-  getToDos,
-  createProject,
-  createDefaultProject,
-  createToDo,
-} from "./storage";
+import { getProjects, getToDos } from "./storage";
+
+const getProjectByID = function (id) {
+  const projects = getProjects();
+
+  const matchingProject = projects.find(function (project) {
+    return project["id"] === id;
+  });
+  return matchingProject;
+};
+
+const getToDoByID = function (id) {
+  const todos = getToDos();
+
+  const matchingToDo = todos.find(function (todo) {
+    return todo["id"] === id;
+  });
+  return matchingToDo;
+};
 
 const getMatchingProjectsToDos = function (id) {
   const todos = getToDos();
@@ -27,28 +39,10 @@ const getMatchingProjectToDosAmountIncomplete = function (id) {
   return incompleteToDos.length;
 };
 
-const getProjectByID = function (id) {
-  const projects = getProjects();
-
-  const matchingProject = projects.find(function (project) {
-    return project["id"] === id;
-  });
-  return matchingProject;
-};
-
-const getToDoByID = function (id) {
-  const todos = getToDos();
-
-  const matchingToDo = todos.find(function (todo) {
-    return todo["id"] === id;
-  });
-  return matchingToDo;
-};
-
 export {
-  getMatchingProjectsToDos,
   getProjectByID,
   getToDoByID,
+  getMatchingProjectsToDos,
   getMatchingProjectToDosAmount,
-  getMatchingProjectToDosAmountIncomplete
+  getMatchingProjectToDosAmountIncomplete,
 };
