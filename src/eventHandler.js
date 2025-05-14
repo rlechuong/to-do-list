@@ -728,7 +728,6 @@ const editToDoCancelButtons = function () {
       addDeleteToDoButtonEvents(getActiveToDo()["id"]);
       editToDoDescriptionForm.hidden = true;
       editToDoTitleForm.hidden = true;
-      editToDoTitleForm.hidden = true;
       editToDoDueDateForm.hidden = true;
       editToDoPriorityForm.hidden = true;
       editToDoNotesForm.hidden = true;
